@@ -28,3 +28,18 @@ a {
   background-color: #6379f4;
   color: white;
 }
+
+.mainButton {
+  background-color: #6379f4;
+  border: #6379f4;
+  color: white;
+  width: 100px;
+  height: 45px;
+  border-radius: 12px;
+  margin: 5% 3%;
+}
+.mainButton:focus {
+  background-color: white;
+  color: #6379f4;
+  border: 2px solid #6379f4;
+}
