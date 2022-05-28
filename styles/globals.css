@@ -1,0 +1,30 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.authButton {
+  background-color: #dadada;
+  border: #dadada;
+  color: #88888f;
+  width: 80%;
+  height: 45px;
+  border-radius: 12px;
+  margin: 15% 2% 5%;
+}
+.authButton:focus {
+  background-color: #6379f4;
+  color: white;
+}
