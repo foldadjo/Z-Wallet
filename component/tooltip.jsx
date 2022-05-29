@@ -15,14 +15,31 @@ function tooltip(props) {
   return (
     <div className="card p-4" style={card}>
       <a
+        href="/dashboard"
         className={`${
           props.tooltip === "dashboard" ? "text-primary" : "text-secondary"
         } mt-4 mb-2 mx-3 gb font-weight-bold`}
-        href="/dashboard"
         style={context}
       >
-        <Image src="/icon dashboard.png" alt="icon" width={20} height={20} />
-        &ensp; <b> Dashboard </b>
+        {props.tooltip === "dashboard" ? (
+          <div>
+            <div style={{ position: "absolute", left: "0px" }}>
+              <Image src="/blue.png" alt="icon" width={5} height={30} />
+            </div>
+            <Image src="/blue grid.png" alt="icon" width={20} height={20} />{" "}
+            &ensp; <b> Dashboard </b>
+          </div>
+        ) : (
+          <div>
+            <Image
+              src="/icon dashboard.png"
+              alt="icon"
+              width={20}
+              height={20}
+            />
+            &ensp; <b> Dashboard </b>
+          </div>
+        )}
       </a>
       <br />
       <a
@@ -32,8 +49,20 @@ function tooltip(props) {
         } mt-4 mb-2 mx-3 gb font-weight-bold`}
         style={context}
       >
-        <Image src="/icon transfer.png" alt="icon" width={20} height={20} />
-        &ensp; <b> Transfer </b>
+        {props.tooltip === "transfer" ? (
+          <div>
+            <div style={{ position: "absolute", left: "0px" }}>
+              <Image src="/blue.png" alt="icon" width={5} height={30} />
+            </div>
+            <Image src="/blue arrow-up.png" alt="icon" width={20} height={20} />{" "}
+            &ensp; <b> Transfer </b>
+          </div>
+        ) : (
+          <div>
+            <Image src="/icon transfer.png" alt="icon" width={20} height={20} />
+            &ensp; <b> Transfer </b>
+          </div>
+        )}
       </a>
       <br />
       <div>
@@ -101,8 +130,20 @@ function tooltip(props) {
         } mt-4 mb-2 mx-3 gb font-weight-bold`}
         style={context}
       >
-        <Image src="/icon user.png" alt="icon" width={20} height={20} />
-        &ensp; <b> Profile </b>
+        {props.tooltip === "profile" ? (
+          <div>
+            <div style={{ position: "absolute", left: "0px" }}>
+              <Image src="/blue.png" alt="icon" width={5} height={30} />
+            </div>
+            <Image src="/blue user.png" alt="icon" width={20} height={20} />{" "}
+            &ensp; <b> Profile </b>
+          </div>
+        ) : (
+          <div>
+            <Image src="/icon user.png" alt="icon" width={20} height={20} />
+            &ensp; <b> Profile </b>
+          </div>
+        )}
       </a>
       <br />
       <br />

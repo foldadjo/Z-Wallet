@@ -20,8 +20,7 @@ function profile() {
           </div>
           <br />
           <div className="text-secondary" style={{ fontSize: "10px" }}>
-            Enter your current 6 digits Zwallet PIN below to <br /> continue to
-            the next steps.
+            Type your new 6 digits security PIN to use in <br /> Zwallet.
           </div>
           <br />
           <br />
@@ -32,7 +31,7 @@ function profile() {
           </div>
           <div className="d-flex justify-content-center">
             <div className="w-50">
-              <Link href="/profile/changepinnew">
+              <Link href="/profile">
                 <a>
                   <button className="authButton w-100"> Continue </button>
                 </a>
