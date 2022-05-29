@@ -17,9 +17,9 @@ const input = {
   fontSize: "10px",
 };
 
-function dashboard() {
+function transfer() {
   return (
-    <Layout title="Dashboard">
+    <Layout title="Transfer" menu="transfer">
       <div>
         <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
           <div style={{ fontSize: "15px" }}>
@@ -109,4 +109,4 @@ function dashboard() {
   );
 }
 
-export default dashboard;
+export default transfer;

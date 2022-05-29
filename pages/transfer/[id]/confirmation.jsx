@@ -8,9 +8,9 @@ const board = {
   padding: "5px",
 };
 
-function dashboard() {
+function confirmation() {
   return (
-    <Layout title="Dashboard">
+    <Layout title="Transfer" menu="transfer">
       <div>
         <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
           <div style={{ fontSize: "15px" }}>
@@ -90,7 +90,57 @@ function dashboard() {
             </div>
           </div>
           <div className="d-flex justify-content-end">
-            <button className="mainButton">Continue</button>
+            <button
+              className="mainButton"
+              data-toggle="modal"
+              data-target="#exampleModal"
+              type="button"
+            >
+              Continue
+            </button>
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">
+                      Enter PIN to Transfer
+                    </h5>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    Enter your 6 digits PIN for confirmation to <br /> continue
+                    transferring money.{" "}
+                  </div>
+                  <br />
+                  <div className="form-group">
+                    <div class="container">
+                      <div class="pinBox">
+                        <input class="pinEntry" type="text" maxlength="6" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-primary">
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -98,4 +148,4 @@ function dashboard() {
   );
 }
 
-export default dashboard;
+export default confirmation;

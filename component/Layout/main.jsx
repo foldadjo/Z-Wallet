@@ -13,7 +13,7 @@ export default function MainLayout(props) {
       <Navbar />
       <div className="row justify-content-md-center my-4 mx-4">
         <div className="col-3 mx-2">
-          <Tooltip />
+          <Tooltip tooltip={props.menu} />
         </div>
         <div className="col-8 mx-2">
           <main>{props.children}</main>

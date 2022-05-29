@@ -14,9 +14,9 @@ const button = {
   width: "200px",
 };
 
-function dashboard() {
+function status() {
   return (
-    <Layout title="Dashboard">
+    <Layout title="Transfer" menu="transfer">
       <div>
         <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
           <div className="d-flex justify-content-center">
@@ -128,4 +128,4 @@ function dashboard() {
   );
 }
 
-export default dashboard;
+export default status;

@@ -11,28 +11,99 @@ const context = {
   cursor: "pointer",
 };
 
-function tooltip() {
+function tooltip(props) {
   return (
     <div className="card p-4" style={card}>
-      <div className="text-secondary mt-4 mb-2 mx-3" style={context}>
+      <a
+        className={`${
+          props.tooltip === "dashboard" ? "text-primary" : "text-secondary"
+        } mt-4 mb-2 mx-3 gb font-weight-bold`}
+        href="/dashboard"
+        style={context}
+      >
         <Image src="/icon dashboard.png" alt="icon" width={20} height={20} />
-        &ensp; Dashboard
-      </div>
+        &ensp; <b> Dashboard </b>
+      </a>
       <br />
-      <div className="text-secondary my-2 mx-3" style={context}>
+      <a
+        href="/transfer"
+        className={`${
+          props.tooltip === "transfer" ? "text-primary" : "text-secondary"
+        } mt-4 mb-2 mx-3 gb font-weight-bold`}
+        style={context}
+      >
         <Image src="/icon transfer.png" alt="icon" width={20} height={20} />
-        &ensp; Transfer
+        &ensp; <b> Transfer </b>
+      </a>
+      <br />
+      <div>
+        <button
+          // href="/topup"
+          className={`${
+            props.tooltip === "topup" ? "text-primary" : "text-secondary"
+          } mt-4 mb-2 mx-3 gb font-weight-bold bg-white border border-white`}
+          data-toggle="modal"
+          data-target="#exampleModal"
+          type="button"
+        >
+          <Image src="/icon topup.png" alt="icon" width={20} height={20} />
+          &ensp; <b> Top Up </b>
+        </button>
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Topup
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Enter the amount of monry, and click <br /> submit
+              </div>
+              <br />
+              <div className="form-group">
+                Rp.
+                <input
+                  type="number"
+                  className="form-control"
+                  id="recipient-name"
+                />
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-primary">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <br />
-      <div className="text-secondary my-2 mx-3" style={context}>
-        <Image src="/icon topup.png" alt="icon" width={20} height={20} />
-        &ensp; Top Up
-      </div>
-      <br />
-      <div className="text-secondary my-2 mx-3" style={context}>
+      <a
+        href="/profile"
+        className={`${
+          props.tooltip === "profile" ? "text-primary" : "text-secondary"
+        } mt-4 mb-2 mx-3 gb font-weight-bold`}
+        style={context}
+      >
         <Image src="/icon user.png" alt="icon" width={20} height={20} />
-        &ensp; Profile
-      </div>
+        &ensp; <b> Profile </b>
+      </a>
       <br />
       <br />
       <br />
@@ -40,9 +111,14 @@ function tooltip() {
       <br />
       <br />
       <br />
-      <div className="text-secondary my-4 mx-3" style={context}>
+      <div
+        className={`${
+          props.tooltip === "dashboard" ? "text-primary" : "text-secondary"
+        } mt-4 mb-2 mx-3 gb font-weight-bold`}
+        style={context}
+      >
         <Image src="/icon logout.png" alt="icon" width={20} height={20} />
-        &ensp; Logout
+        &ensp; <b> Logout </b>
       </div>
     </div>
   );

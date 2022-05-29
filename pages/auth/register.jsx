@@ -88,7 +88,7 @@ export default function register() {
         <button className="authButton"> Sign Up </button>
         <div className="col-10 text-center">
           Already have an account? Let’s{" "}
-          <a href="register" style={{ cursor: "pointer" }}>
+          <a href="login" style={{ cursor: "pointer" }}>
             Login
           </a>
         </div>

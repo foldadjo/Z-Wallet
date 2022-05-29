@@ -20,7 +20,7 @@ const button = {
 
 function dashboard() {
   return (
-    <Layout title="Dashboard">
+    <Layout title="History" menu="dashboard">
       <div>
         <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
           <div

@@ -22,7 +22,7 @@ const button = {
 
 function dashboard() {
   return (
-    <Layout title="Dashboard">
+    <Layout title="Dashboard" menu="dashboard">
       <div>
         <div className="bg-primary text-white row p-4 pb-1 mb-5" style={board}>
           <div className="col-8 my-2">
@@ -33,7 +33,7 @@ function dashboard() {
             <div className="text-light mt-2">+62 813-9387-7946</div>
           </div>
           <div className="col-3 mx-4">
-            <button style={button}>
+            <button href="transfer" style={button}>
               <Image
                 src="/icon transfer.png"
                 alt="icon"
