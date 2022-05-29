@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../../component/Layout/main";
+import Layout from "../../../component/Layout/main";
 import Image from "next/image";
 
 const board = {

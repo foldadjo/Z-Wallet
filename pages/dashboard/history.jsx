@@ -108,6 +108,7 @@ function dashboard() {
               <b> -Rp149.000</b>
             </div>
           </div>
+          <br />
         </div>
       </div>
     </Layout>
