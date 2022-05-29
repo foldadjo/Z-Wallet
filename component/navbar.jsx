@@ -10,13 +10,6 @@ const navbar = {
   boxShadow: "#E5E5E5 0px 2px 10px 2px",
 };
 
-const notivication = {
-  borderRadius: "25px",
-  border: "white solid",
-  boxShadow: "#E5E5E5 0px 2px 10px 2px",
-  padding: "5px",
-};
-
 export default function index() {
   const router = useRouter();
   const pathname = router.pathname;
@@ -45,9 +38,9 @@ export default function index() {
                 +62 8139 3877 7946
               </p>
             </div>
-            <div className="m-1 dropdown">
-              <a
-                class="btn dropdown-toggle"
+            <div className="m-1 my-3 dropdown">
+              <button
+                className="dropbtn"
                 href="#"
                 role="button"
                 id="dropdownMenuLink"
@@ -55,34 +48,47 @@ export default function index() {
                 aria-expanded="false"
               >
                 <Image src="/icon bell.png" width={"30px"} height={"30px"} />{" "}
-              </a>
-              <div className="collapse navbar-collapse" id="navbarNav">
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <li className="dropdown-item" style={notivication}>
-                    <div className="container row">
-                      <div className="col-2">
-                        <Image
-                          src={"/arrow-down.png"}
-                          width={"30px"}
-                          height={"30px"}
-                        />
-                      </div>
-                      <div className="col-6">
-                        <div className="text-muted">Accept from Joshua Lee</div>
-                        <div> Rp220.000</div>
+              </button>
+              <div className="p-2 m-3 dropdown-content">
+                <div className="m-2 mb-4 dropdown-content-card">
+                  <div className="container row">
+                    <div className="col-2 w-25">
+                      <Image
+                        src={"/arrow-down.png"}
+                        width={"40px"}
+                        height={"40px"}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <div className="text-muted">Accept from Joshua Lee</div>
+                      <div>
+                        <b> Rp220.000 </b>
                       </div>
                     </div>
-                  </li>
-                  <hr className="my-1" />
-                </ul>
+                  </div>
+                </div>
+                <div className="m-2 mb-4 dropdown-content-card">
+                  <div className="container row">
+                    <div className="col-2 w-25">
+                      <Image
+                        src={"/arrow-down.png"}
+                        width={"40px"}
+                        height={"40px"}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <div className="text-muted">Accept from Joshua Lee</div>
+                      <div>
+                        <b> Rp220.000 </b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </form>
         </div>
       </nav>
-      {/* <Script src="/bootstrap.bundle.js" /> */}
-      {/* <Link href={"/home"}> Home </Link> |{" "}
-      <button onClick={handleLogout}> Logout </button> */}
     </div>
   );
 }

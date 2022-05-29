@@ -80,7 +80,7 @@ function dashboard() {
           <br />
           <div className="d-flex justify-content-center">
             <input
-              className="text-primary bg-white"
+              className="text-bluesky bg-white"
               style={input}
               type="number"
               placeholder="0.00"

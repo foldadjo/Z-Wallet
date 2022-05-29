@@ -16,8 +16,8 @@ const nextConfig = {
         destination: "/auth/register",
       },
       {
-        source: "/profile/:id",
-        destination: "/user/:id",
+        source: "/:id",
+        destination: "/profile/:id",
       },
     ];
   },

@@ -68,7 +68,7 @@ function dashboard() {
                 </div>
               </div>
             </div>
-            <div className="text-success" style={{ fontSize: "10px" }}>
+            <div className="text-teal" style={{ fontSize: "10px" }}>
               <b> +Rp50.000</b>
             </div>
           </div>
