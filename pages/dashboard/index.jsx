@@ -24,7 +24,7 @@ function dashboard() {
   return (
     <Layout title="Dashboard">
       <div>
-        <div className="bg-primary text-white row p-4" style={board}>
+        <div className="bg-primary text-white row p-4 pb-1 mb-5" style={board}>
           <div className="col-8 my-2">
             <div className="text-light">Balance</div>
             <div style={{ fontSize: "40px" }}>

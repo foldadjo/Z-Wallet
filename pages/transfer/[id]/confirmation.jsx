@@ -8,20 +8,11 @@ const board = {
   padding: "5px",
 };
 
-const input = {
-  borderRadius: "5px",
-  padding: "10px 20px",
-  border: "0",
-  width: "100%",
-  height: "40px",
-  fontSize: "10px",
-};
-
 function dashboard() {
   return (
     <Layout title="Dashboard">
       <div>
-        <div className="bg-white text-dark p-4" style={board}>
+        <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
           <div style={{ fontSize: "15px" }}>
             <div>
               <b>Transfer to</b>

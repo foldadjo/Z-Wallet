@@ -22,7 +22,7 @@ function dashboard() {
   return (
     <Layout title="Dashboard">
       <div>
-        <div className="bg-white text-dark p-4" style={board}>
+        <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
           <div style={{ fontSize: "15px" }}>
             <div>
               <b>Transfer Money</b>
