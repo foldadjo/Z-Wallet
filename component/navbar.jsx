@@ -39,18 +39,17 @@ export default function index() {
               </p>
             </div>
             <div className="m-1 my-3 dropdown">
-              <button
+              <div
                 className="dropbtn"
-                href="#"
                 role="button"
                 id="dropdownMenuLink"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 <Image src="/icon bell.png" width={"30px"} height={"30px"} />{" "}
-              </button>
+              </div>
               <div className="p-2 m-3 dropdown-content">
-                <div className="m-2 mb-4 dropdown-content-card">
+                <div className="m-2 mb-4 content-card">
                   <div className="container row">
                     <div className="col-2 w-25">
                       <Image
@@ -67,7 +66,7 @@ export default function index() {
                     </div>
                   </div>
                 </div>
-                <div className="m-2 mb-4 dropdown-content-card">
+                <div className="m-2 mb-4 content-card">
                   <div className="container row">
                     <div className="col-2 w-25">
                       <Image

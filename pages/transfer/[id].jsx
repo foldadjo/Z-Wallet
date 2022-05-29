@@ -8,12 +8,6 @@ const board = {
   padding: "5px",
 };
 
-const card = {
-  borderRadius: "10px",
-  boxShadow: "#E5E5E5 0px 1px 5px 1px",
-  padding: "5px",
-};
-
 const input = {
   borderRadius: "5px",
   padding: "10px 20px",
@@ -29,16 +23,13 @@ function dashboard() {
     <Layout title="Dashboard">
       <div>
         <div className="bg-white text-dark p-4" style={board}>
-          <div style={{ fontSize: "12px" }}>
+          <div style={{ fontSize: "15px" }}>
             <div>
               <b>Transfer Money</b>
             </div>
           </div>
           <br />
-          <div
-            className="d-flex justify-content-between px-4 pt-3"
-            style={card}
-          >
+          <div className="d-flex content-card justify-content-between px-4 pt-3">
             <div className="row" style={{ height: "50px", width: "420px" }}>
               <div className="col-1">
                 <div style={{ height: "50px", width: "40px" }}>
