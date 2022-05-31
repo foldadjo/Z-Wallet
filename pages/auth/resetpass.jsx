@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function resetPass() {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    email: "",
+    linkDirect: "http://localhost:3000/auth/resetpassconfirm",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    // console.log(form);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.post("/auth/forgot-password", form);
+      console.log(result);
+      alert(result.data.msg);
+    } catch (error) {
+      alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
+  console.log(form);
   return (
     <Layout title="Reset Password Page">
       <div className="container">
@@ -28,14 +53,19 @@ export default function resetPass() {
           <input
             className="col-8 bg-light border border-light"
             type="email"
+            name="email"
             placeholder="Enter your e-mail"
             aria-label="Email"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
           />
           <hr className="col-10" />
         </div>
 
-        <button className="authButton"> Confirm </button>
+        <button className="authButton" onClick={handleSubmit}>
+          {" "}
+          Confirm{" "}
+        </button>
       </div>
     </Layout>
   );

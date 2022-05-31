@@ -1,9 +1,44 @@
-import React from "react";
-import Layout from "../../component/Layout/auth";
+import React, { useState } from "react";
+import Layout from "../../../component/Layout/auth";
 import Image from "next/image";
-import Script from "next/script";
+import axios from "../../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+// import { InferGetServerSidePropsType } from 'next'
 
 export default function confirmPass() {
+  const router = useRouter();
+
+  const [form, setForm] = useState({
+    keysChangePassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form);
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      newPassword: form.newPassword,
+      confirmPassword: form.confirmPassword,
+      keysChangePassword: router.query.keyId,
+    };
+    try {
+      const result = await axios.patch("/auth/reset-password", data);
+      console.log(result);
+      Cookies.set("token", result.data.data.token);
+      Cookies.set("id", result.data.data.id);
+      router.push("/login");
+      alert(result.data.msg);
+    } catch (error) {
+      alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
+
   return (
     <Layout title="Reset Password Page">
       <div className="container">
@@ -29,9 +64,11 @@ export default function confirmPass() {
           <input
             className="col-8 bg-light border border-light"
             type="password"
+            name="newPassword"
             placeholder="Create new password"
             aria-label="Password"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
           />
           <div className="input-group-addon">
             <i className="fa fa-eye-slash" aria-hidden="true"></i>
@@ -45,22 +82,21 @@ export default function confirmPass() {
           <input
             className="col-8 bg-light border border-light"
             type="password"
+            name="confirmPassword"
             placeholder="Create new password"
             aria-label="Password"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
           />
           <div className="input-group-addon">
             <i className="fa fa-eye-slash" aria-hidden="true"></i>
           </div>
           <hr className="col-10" />
         </div>
-        <button className="authButton"> Reset Password </button>
-        <Script
-          src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-          crossorigin="anonymous"
-        ></Script>
-        <Script src="/path/to/bootstrap-show-password.js"></Script>
+        <button className="authButton" onClick={handleSubmit}>
+          {" "}
+          Reset Password{" "}
+        </button>
       </div>
     </Layout>
   );
