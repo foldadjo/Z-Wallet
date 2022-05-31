@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 // import { useState } from "react";
 // import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import axios from "../utils/axios";
 
 const card = {
   borderRadius: "25px",
@@ -16,13 +17,30 @@ const context = {
 
 function tooltip(props) {
   const router = useRouter();
-  const handleSubmit = () => {
-    console.log("topup");
+  const [form, setForm] = useState({
+    amount: "",
+  });
+  console.log(form);
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleTopup = async () => {
+    try {
+      const topUp = await axios.post("/transaction/top-up", form);
+      console.log(topUp);
+      window.open(topUp.data.data.redirectUrl);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = async () => {
     Cookies.remove("id");
     Cookies.remove("token");
+    Cookies.remove("noTelp");
+    Cookies.remove("image");
     localStorage.clear();
     router.post("/login");
   };
@@ -120,20 +138,22 @@ function tooltip(props) {
                 Enter the amount of monry, and click <br /> submit
               </div>
               <br />
-              <div className="form-group">
+              <div className="form-group d-flex justify-content-center">
                 Rp.
                 <input
                   type="number"
-                  className="form-control"
+                  className="form-control w-75"
                   id="recipient-name"
+                  name="amount"
+                  onChange={handleChangeText}
                 />
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn-primary"
-                  data-bs-dismiss="modal"
-                  onClick={() => handleSubmit()}
+                  // data-bs-dismiss="modal"
+                  onClick={handleTopup}
                 >
                   Submit
                 </button>

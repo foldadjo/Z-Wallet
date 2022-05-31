@@ -1,8 +1,8 @@
-import React from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import Script from "next/script";
+import Cookies from "js-cookie";
+import axios from "../utils/axios";
 
 const navbar = {
   borderRadius: "0 0 25px 25px",
@@ -12,10 +12,26 @@ const navbar = {
 
 export default function index() {
   const router = useRouter();
-  const pathname = router.pathname;
-  const handleLogout = () => {
-    router.push("/auth/login");
+  const name = Cookies.get("name");
+  const noTelp = Cookies.get("noTelp");
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getNotivication;
+  }, []);
+  // const pathname = router.pathname;
+  const getNotivication = async () => {
+    try {
+      const id = Cookies.get("id");
+      const result = await axios.get(
+        `transaction/history?page=1&limit=5&filter=MONTH`
+      );
+      setData(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div>
       <nav className="navbar navbar-light bg-white" style={navbar}>
@@ -33,9 +49,9 @@ export default function index() {
               />
             </div>
             <div className="m-1">
-              <strong>Robert Chandler</strong>
+              <strong>{name}</strong>
               <p className="mt-1" style={{ fontSize: "10px" }}>
-                +62 8139 3877 7946
+                {noTelp === undefined ? "phone number not add" : noTelp}
               </p>
             </div>
             <div className="m-1 my-3 dropdown">
@@ -49,40 +65,25 @@ export default function index() {
                 <Image src="/icon bell.png" width={"30px"} height={"30px"} />{" "}
               </div>
               <div className="p-2 m-3 dropdown-content">
-                <div className="m-2 mb-4 content-card">
-                  <div className="container row">
-                    <div className="col-2 w-25">
-                      <Image
-                        src={"/arrow-down.png"}
-                        width={"40px"}
-                        height={"40px"}
-                      />
-                    </div>
-                    <div className="col-6">
-                      <div className="text-muted">Accept from Joshua Lee</div>
-                      <div>
-                        <b> Rp220.000 </b>
+                {data.map((item) => (
+                  <div className="m-2 mb-4 content-card" key={item.id}>
+                    <div className="container row">
+                      <div className="col-2 w-25">
+                        <Image
+                          src={"/arrow-down.png"}
+                          width={"40px"}
+                          height={"40px"}
+                        />
+                      </div>
+                      <div className="col-6">
+                        <div className="text-muted">{item.notes}</div>
+                        <div>
+                          <b> Rp. {item.amount} </b>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="m-2 mb-4 content-card">
-                  <div className="container row">
-                    <div className="col-2 w-25">
-                      <Image
-                        src={"/arrow-down.png"}
-                        width={"40px"}
-                        height={"40px"}
-                      />
-                    </div>
-                    <div className="col-6">
-                      <div className="text-muted">Accept from Joshua Lee</div>
-                      <div>
-                        <b> Rp220.000 </b>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </form>

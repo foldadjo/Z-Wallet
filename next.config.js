@@ -5,7 +5,13 @@ const nextConfig = {
     URL_BACKEND: "https://fazzpay.herokuapp.com",
     URL_BACKEND2: "https://jsonplaceholder.typicode.com",
     URL_FRONTEND: "localhost:3000",
+    URL_CLOUDINARY:
+      "https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/",
   },
+  // images: {
+  //   loader: "cloudinary",
+  //   path: "https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/",
+  // },
   async rewrites() {
     return [
       {
