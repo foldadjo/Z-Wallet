@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
-import Image from "next/image";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function CreatePin() {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    pin: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const id = Cookies.get("id");
+      const result = await axios.patch(`/user/pin/${id}`, form);
+      console.log(result);
+      Cookies.set("pin", result.data.data.pin);
+      router.post("/dashboard");
+    } catch (error) {
+      alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
   return (
     <Layout title="Create Pin Page">
       <div className="container">
@@ -22,27 +45,22 @@ export default function CreatePin() {
           Zwallet account password and the PIN.
         </div>
         <div className="mt-5 mb-3 row justify-content-md-center">
-          <div className="col-1 card mx-2">
-            <input type="number" min="0" max="9" />
+          <div className="d-flex justify-content-center my-3">
+            <div className="pinBox">
+              <input
+                onClick={handleChangeText}
+                name="pin"
+                className="pinEntry"
+                type="number"
+                maxlength="6"
+              />
+            </div>
           </div>
-          <div className="col-1 card mx-2">
-            <input type="number" min="0" max="9" />
-          </div>
-          <div className="col-1 card mx-2">
-            <input type="number" min="0" max="9" />
-          </div>
-          <div className="col-1 card mx-2">
-            <input type="number" min="0" max="9" />
-          </div>
-          <div className="col-1 card mx-2">
-            <input type="number" min="0" max="9" />
-          </div>
-          <div className="col-1 card mx-2">
-            <input type="number" min="0" max="9" />
-          </div>
-          <div className="col-2"></div>
         </div>
-        <button className="authButton"> Confirm </button>
+        <button className="authButton" onClick={handleSubmit}>
+          {" "}
+          Confirm{" "}
+        </button>
       </div>
     </Layout>
   );

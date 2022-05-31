@@ -1,17 +1,32 @@
 import React from "react";
 import Image from "next/image";
+// import { useState } from "react";
+// import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 const card = {
   borderRadius: "25px",
   border: "white solid",
   boxShadow: "#E5E5E5 0px 2px 10px 2px",
 };
-
 const context = {
   cursor: "pointer",
 };
 
 function tooltip(props) {
+  const router = useRouter();
+  const handleSubmit = () => {
+    console.log("topup");
+  };
+
+  const handleLogout = async () => {
+    Cookies.remove("id");
+    Cookies.remove("token");
+    localStorage.clear();
+    router.post("/login");
+  };
+
   return (
     <div className="card p-4" style={card}>
       <a
@@ -71,8 +86,8 @@ function tooltip(props) {
           className={`${
             props.tooltip === "topup" ? "text-primary" : "text-secondary"
           } mt-4 mb-2 mx-3 gb font-weight-bold bg-white border border-white`}
-          data-toggle="modal"
-          data-target="#exampleModal"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
           type="button"
         >
           <Image src="/icon topup.png" alt="icon" width={20} height={20} />
@@ -81,7 +96,7 @@ function tooltip(props) {
         <div
           className="modal fade"
           id="exampleModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
@@ -95,7 +110,7 @@ function tooltip(props) {
                 <button
                   type="button"
                   className="close"
-                  data-dismiss="modal"
+                  data-bs-dismiss="modal"
                   aria-label="Close"
                 >
                   <span aria-hidden="true">&times;</span>
@@ -114,7 +129,12 @@ function tooltip(props) {
                 />
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  onClick={() => handleSubmit()}
+                >
                   Submit
                 </button>
               </div>
@@ -152,14 +172,18 @@ function tooltip(props) {
       <br />
       <br />
       <br />
-      <div
-        className={`${
-          props.tooltip === "dashboard" ? "text-primary" : "text-secondary"
-        } mt-4 mb-2 mx-3 gb font-weight-bold`}
-        style={context}
-      >
-        <Image src="/icon logout.png" alt="icon" width={20} height={20} />
-        &ensp; <b> Logout </b>
+      <div>
+        <a
+          onClick={handleLogout}
+          href="/login"
+          className={`${
+            props.tooltip === "logout" ? "text-primary" : "text-secondary"
+          } mt-4 mb-2 mx-3 gb font-weight-bold`}
+          style={context}
+        >
+          <Image src="/icon logout.png" alt="icon" width={20} height={20} />
+          &ensp; <b> Logout </b>
+        </a>
       </div>
     </div>
   );

@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
-import Script from "next/script";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function login() {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.post("/auth/login", form);
+      console.log(result);
+      Cookies.set("token", result.data.data.token);
+      Cookies.set("id", result.data.data.id);
+      Cookies.set("pin", result.data.data.pin);
+      if (result.data.data.pin === null) {
+        router.push("/auth/createpin");
+      } else {
+        router.push("/dashboard");
+        alert("login success");
+      }
+    } catch (error) {
+      alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
   return (
     <Layout title="Login Page">
       <div className="container">
@@ -28,9 +58,11 @@ export default function login() {
           <input
             className="col-8 bg-light border border-light"
             type="email"
+            name="email"
             placeholder="Enter your e-mail"
             aria-label="Email"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
           />
           <hr className="col-10" />
         </div>
@@ -41,9 +73,11 @@ export default function login() {
           <input
             className="col-8 bg-light border border-light"
             type="password"
+            name="password"
             placeholder="Enter your password"
             aria-label="Password"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
           />
           <div className="input-group-addon">
             <i className="fa fa-eye-slash" aria-hidden="true"></i>
@@ -59,10 +93,16 @@ export default function login() {
             </a>
           </dev>
         </div>
-        <div className="text-danger text-center col-10">
-          Email or Password Invalid
-        </div>
-        <button className="authButton"> Login </button>
+        {/* <div className="text-danger text-center col-10">
+          {!message ? null : (
+            <div className="alert alert-primary" role="alert">
+              {message}
+            </div>
+          )}
+        </div> */}
+        <button type="submit" className="authButton" onClick={handleSubmit}>
+          Login
+        </button>
         <div className="col-10 text-center">
           Don’t have an account? Let’s{" "}
           <a href="register" style={{ cursor: "pointer" }}>
@@ -70,12 +110,6 @@ export default function login() {
           </a>
         </div>
       </div>
-      <Script
-        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"
-      ></Script>
-      <Script src="/path/to/bootstrap-show-password.js"></Script>
     </Layout>
   );
 }

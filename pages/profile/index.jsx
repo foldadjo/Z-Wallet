@@ -8,12 +8,6 @@ const board = {
   padding: "5px",
 };
 
-const button = {
-  boxShadow: "#E5E5E5 0px 2px 10px 2px",
-  padding: "5px",
-  width: "200px",
-};
-
 function profile() {
   return (
     <Layout title="Profile" menu="profile">

@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
-import Script from "next/script";
+import axios from "../../utils/axios";
+import { useRouter } from "next/router";
 
 export default function register() {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.post("/auth/register", form);
+      console.log(result);
+      router.push("/login");
+      alert("succes register");
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.msg);
+    }
+  };
+
   return (
     <Layout title="Register Page">
       <div className="container">
@@ -31,6 +54,8 @@ export default function register() {
             placeholder="Enter your firstname"
             aria-label="firstname"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
+            name="firstName"
           />
           <hr className="col-10" />
         </div>
@@ -44,6 +69,8 @@ export default function register() {
             placeholder="Enter your lastname"
             aria-label="lastname"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
+            name="lastName"
           />
           <hr className="col-10" />
         </div>
@@ -57,6 +84,8 @@ export default function register() {
             placeholder="Enter your e-mail"
             aria-label="Email"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
+            name="email"
           />
           <hr className="col-10" />
         </div>
@@ -70,22 +99,19 @@ export default function register() {
             placeholder="Enter your password"
             aria-label="Password"
             aria-describedby="basic-addon1"
+            onChange={handleChangeText}
+            name="password"
           />
           <div className="input-group-addon">
             <i className="fa fa-eye-slash" aria-hidden="true"></i>
           </div>
           <hr className="col-10" />
           <dev className="col-7"></dev>
-          <dev
-            className="col-4 text-dark"
-            style={{ fontSize: "10px", cursor: "pointer" }}
-          >
-            <a href="auth/resetpass">
-              <strong> Forgot password?</strong>
-            </a>
-          </dev>
         </div>
-        <button className="authButton"> Sign Up </button>
+        <button className="authButton" onClick={handleSubmit}>
+          {" "}
+          Sign Up{" "}
+        </button>
         <div className="col-10 text-center">
           Already have an account? Let’s{" "}
           <a href="login" style={{ cursor: "pointer" }}>
@@ -93,12 +119,6 @@ export default function register() {
           </a>
         </div>
       </div>
-      <Script
-        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"
-      ></Script>
-      <Script src="/path/to/bootstrap-show-password.js"></Script>
     </Layout>
   );
 }
