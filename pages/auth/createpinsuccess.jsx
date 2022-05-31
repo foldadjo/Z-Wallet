@@ -1,8 +1,14 @@
 import React from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function CreatePinSucces() {
+  const router = useRouter();
+  const handleSubmit = () => {
+    router.push("/dashboard");
+  };
+
   return (
     <Layout title="Create Pin Success">
       <div className="container">
@@ -18,7 +24,10 @@ export default function CreatePinSucces() {
           the features in Zwallet. Login to your new account and <br /> start
           exploring!
         </div>
-        <button className="authButton"> Login now </button>
+        <button className="authButton" onClick={handleSubmit}>
+          {" "}
+          Go to Dashboard{" "}
+        </button>
       </div>
     </Layout>
   );

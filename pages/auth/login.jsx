@@ -22,7 +22,6 @@ export default function login() {
       console.log(result);
       Cookies.set("token", result.data.data.token);
       Cookies.set("id", result.data.data.id);
-      Cookies.set("pin", result.data.data.pin);
       if (result.data.data.pin === null) {
         router.push("/auth/createpin");
       } else {

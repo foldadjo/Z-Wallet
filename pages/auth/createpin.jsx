@@ -19,10 +19,9 @@ export default function CreatePin() {
       const id = Cookies.get("id");
       const result = await axios.patch(`/user/pin/${id}`, form);
       console.log(result);
-      Cookies.set("pin", result.data.data.pin);
-      router.post("/dashboard");
+      router.push("/auth/createpinsuccess");
     } catch (error) {
-      alert(error.response.data.msg);
+      // alert(error.response.data.msg);
       console.log(error);
     }
   };
@@ -48,11 +47,11 @@ export default function CreatePin() {
           <div className="d-flex justify-content-center my-3">
             <div className="pinBox">
               <input
-                onClick={handleChangeText}
                 name="pin"
                 className="pinEntry"
                 type="number"
-                maxlength="6"
+                maxLength="6"
+                onChange={handleChangeText}
               />
             </div>
           </div>
