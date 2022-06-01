@@ -35,13 +35,13 @@ function tooltip(props) {
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     Cookies.remove("id");
     Cookies.remove("token");
     Cookies.remove("noTelp");
     Cookies.remove("image");
     localStorage.clear();
-    router.post("/login");
+    router.push("/login");
   };
 
   return (

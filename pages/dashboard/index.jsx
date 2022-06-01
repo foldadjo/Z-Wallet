@@ -57,7 +57,9 @@ function dashboard() {
         result.data.data.firstName + " " + result.data.data.lastName
       );
       Cookies.set("noTelp", result.data.data.noTelp);
+      Cookies.set("image", result.data.data.image);
       Cookies.set("history", JSON.stringify(history.data.data));
+      Cookies.set("balance", result.data.data.balance);
       setUserdata(result.data.data);
       setDashboard(dashboard.data.data);
       setHistory(history.data.data);
@@ -280,8 +282,8 @@ function dashboard() {
                             style={{ borderRadius: "15px" }}
                           />
                         ) : (
-                          <Image
-                            src={`${process.env.URL_CLOUDINARY}/${item.image}`}
+                          <img
+                            src={process.env.URL_CLOUDINARY + item.image}
                             width={"50px"}
                             height={"45px"}
                             style={{ borderRadius: "15px" }}

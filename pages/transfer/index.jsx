@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 const board = {
   borderRadius: "20px",
@@ -18,6 +21,40 @@ const input = {
 };
 
 function transfer() {
+  const router = useRouter();
+  const [userdata, setUserdata] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const handleFilter = (e) => {
+    e.key === "Enter" ? setSearch(e.target.value) : null;
+    getUserdata();
+  };
+
+  // console.log(userdata.map((item) => item.id));
+
+  useEffect(() => {
+    getUserdata();
+  }, [search]);
+
+  const getUserdata = async () => {
+    try {
+      const result = await axios.get(
+        `/user?page=1&limit=10&search=${search}&sort=firstName ASC`
+      );
+      setUserdata(result.data.data);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleTransfer = (id, firstName, lastName, image, noTelp) => {
+    Cookies.set(`transferName`, firstName + " " + lastName);
+    Cookies.set("transferImage", image);
+    Cookies.set("transferNoTelp", noTelp);
+    router.push(`/transfer/${id}`);
+  };
+
   return (
     <Layout title="Transfer" menu="transfer">
       <div>
@@ -33,76 +70,69 @@ function transfer() {
             style={input}
             type="text"
             placeholder="Search receiver here"
+            onKeyPress={(e) => handleFilter(e)}
           />
           <br />
           <br />
-          <div className="d-flex justify-content-between px-4 pt-3 content-card">
-            <div className="row" style={{ height: "50px", width: "420px" }}>
-              <div className="col-1">
-                <div style={{ height: "50px", width: "40px" }}>
-                  {" "}
-                  <Image
-                    src={"/profile default.png"}
-                    width={"50px"}
-                    height={"45px"}
-                    style={{ borderRadius: "15px" }}
-                  />
+          {userdata.map((item) => (
+            <div
+              key={item.id}
+              onClick={() =>
+                handleTransfer(
+                  item.id,
+                  item.firstName,
+                  item.lastName,
+                  item.image,
+                  item.noTelp
+                )
+              }
+            >
+              <div className="d-flex justify-content-between px-4 pt-3 content-card">
+                <div className="row" style={{ height: "50px", width: "420px" }}>
+                  <div className="col-1">
+                    <div style={{ height: "50px", width: "40px" }}>
+                      {item.image === null ? (
+                        <Image
+                          src={"/profile default.png"}
+                          width={"50px"}
+                          height={"45px"}
+                          style={{ borderRadius: "15px" }}
+                        />
+                      ) : (
+                        <img
+                          src={process.env.URL_CLOUDINARY + item.image}
+                          width={"50px"}
+                          height={"45px"}
+                          style={{ borderRadius: "15px" }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="col-8"
+                    style={{
+                      height: "50px",
+                      width: "220px",
+                      padding: "0 0 0 45px",
+                    }}
+                  >
+                    <div style={{ fontSize: "12px" }}>
+                      <b>{item.firstName + " " + item.lastName}</b>
+                    </div>
+                    <div
+                      className="text-secondary my-2"
+                      style={{ fontSize: "8px" }}
+                    >
+                      {item.noTelp === null
+                        ? "phone number not add"
+                        : "+" + item.noTelp}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div
-                className="col-8"
-                style={{
-                  height: "50px",
-                  width: "220px",
-                  padding: "0 0 0 45px",
-                }}
-              >
-                <div style={{ fontSize: "12px" }}>
-                  <b>Momo Taro</b>
-                </div>
-                <div
-                  className="text-secondary my-2"
-                  style={{ fontSize: "8px" }}
-                >
-                  +62 812-4343-6731
-                </div>
-              </div>
+              <br />
             </div>
-          </div>
-          <br />
-          <div className="d-flex justify-content-between px-4 pt-3 content-card">
-            <div className="row " style={{ height: "50px", width: "420px" }}>
-              <div className="col-1">
-                <div style={{ height: "50px", width: "40px" }}>
-                  <Image
-                    src={"/profile default.png"}
-                    width={"50px"}
-                    height={"45px"}
-                    style={{ borderRadius: "15px" }}
-                  />
-                </div>
-              </div>
-              <div
-                className="col-8"
-                style={{
-                  height: "50px",
-                  width: "220px",
-                  padding: "0 0 0 45px",
-                }}
-              >
-                <div style={{ fontSize: "12px" }}>
-                  <b>Samuel Suhi</b>
-                </div>
-                <div
-                  className="text-secondary my-2"
-                  style={{ fontSize: "8px" }}
-                >
-                  +62 813-8492-9994
-                </div>
-              </div>
-            </div>
-          </div>
-          <br />
+          ))}
         </div>
       </div>
     </Layout>

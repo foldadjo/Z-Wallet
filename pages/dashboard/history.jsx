@@ -86,8 +86,8 @@ function history() {
                           style={{ borderRadius: "15px" }}
                         />
                       ) : (
-                        <Image
-                          src={`${process.env.URL_CLOUDINARY}/${item.image}`}
+                        <img
+                          src={process.env.URL_CLOUDINARY + item.image}
                           width={"50px"}
                           height={"45px"}
                           style={{ borderRadius: "15px" }}

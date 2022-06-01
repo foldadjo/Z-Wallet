@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import axios from "../utils/axios";
 
 const navbar = {
   borderRadius: "0 0 25px 25px",
@@ -14,6 +13,7 @@ export default function Navbar(props) {
   const router = useRouter();
   const name = Cookies.get("name");
   const noTelp = Cookies.get("noTelp");
+  const image = Cookies.get("image");
   const dataHistory = Cookies.get("history")
     ? JSON.parse(Cookies.get("history"))
     : [];
@@ -32,12 +32,21 @@ export default function Navbar(props) {
         <div className="dropdown d-flex justify-content-end w-75">
           <div className="d-flex mx-3" style={{ widht: "120px" }}>
             <div className="m-1 mx-2">
-              <Image
-                src={"/profile default.png"}
-                width={"50px"}
-                height={"45px"}
-                style={{ borderRadius: "15px" }}
-              />
+              {image === "null" ? (
+                <Image
+                  src={"/profile default.png"}
+                  width={"50px"}
+                  height={"45px"}
+                  style={{ borderRadius: "15px" }}
+                />
+              ) : (
+                <img
+                  src={process.env.URL_CLOUDINARY + image}
+                  width={"50px"}
+                  height={"45px"}
+                  style={{ borderRadius: "15px" }}
+                />
+              )}
             </div>
             <div className="m-1">
               <strong>{name}</strong>
@@ -79,7 +88,9 @@ export default function Navbar(props) {
                       )}
                     </div>
                     <div className="col-6">
-                      <div className="text-muted">{item.type}</div>
+                      <div className="text-muted">
+                        {item.type} to {item.fullName}
+                      </div>
                       <div>
                         <b> Rp. {item.amount} </b>
                       </div>

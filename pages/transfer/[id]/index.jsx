@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
+import axios from "../../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import cookies from "next-cookies";
 
 const board = {
   borderRadius: "20px",
@@ -18,7 +22,40 @@ const input = {
   textAlign: "center",
 };
 
-function transfer() {
+function transferId() {
+  const router = useRouter();
+  const transferName = Cookies.get("transferName");
+  const transferImage = Cookies.get("transferImage");
+  const transferNoTelp = Cookies.get("transferNoTelp");
+  const balance = Cookies.get("balance");
+
+  const [form, setForm] = useState({
+    receiverId: "",
+    amount: "",
+    notes: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form);
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      amount: form.amount,
+      notes: form.notes,
+      receiverId: router.query.id,
+    };
+    try {
+      const date = new Date().toISOString().split("T")[0];
+      Cookies.set("dataTransfer", JSON.stringify(data));
+      Cookies.set("dateTransfer", date);
+      router.push(`/transfer/${data.receiverId}/confirmation`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout title="Transfer" menu="transfer">
       <div>
@@ -33,13 +70,21 @@ function transfer() {
             <div className="row" style={{ height: "50px", width: "420px" }}>
               <div className="col-1">
                 <div style={{ height: "50px", width: "40px" }}>
-                  {" "}
-                  <Image
-                    src={"/profile default.png"}
-                    width={"50px"}
-                    height={"45px"}
-                    style={{ borderRadius: "15px" }}
-                  />
+                  {transferImage === "null" ? (
+                    <Image
+                      src={"/profile default.png"}
+                      width={"50px"}
+                      height={"45px"}
+                      style={{ borderRadius: "15px" }}
+                    />
+                  ) : (
+                    <img
+                      src={process.env.URL_CLOUDINARY + transferImage}
+                      width={"50px"}
+                      height={"45px"}
+                      style={{ borderRadius: "15px" }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -51,13 +96,15 @@ function transfer() {
                 }}
               >
                 <div style={{ fontSize: "12px" }}>
-                  <b>Momo Taro</b>
+                  <b>{transferName}</b>
                 </div>
                 <div
                   className="text-secondary my-2"
                   style={{ fontSize: "8px" }}
                 >
-                  +62 812-4343-6731
+                  {transferNoTelp !== "null"
+                    ? transferNoTelp
+                    : "number phond haven't added"}
                 </div>
               </div>
             </div>
@@ -75,11 +122,13 @@ function transfer() {
               style={input}
               type="number"
               placeholder="0.00"
+              name="amount"
+              onChange={handleChangeText}
             />
           </div>
           <br />
           <div className="d-flex justify-content-center">
-            <b> Rp120.000 Available </b>
+            <b> Rp. {!balance ? "0" : balance} Available </b>
           </div>
           <br />
           <br />
@@ -91,13 +140,17 @@ function transfer() {
               className="col-4 bg-white border border-white"
               type="text"
               placeholder="Add some notes"
+              name="notes"
+              onChange={handleChangeText}
             />
             <div className="row d-flex justify-content-center mt-1">
               <hr className="col-5" />
             </div>
           </div>
           <div className="d-flex justify-content-end">
-            <button className="mainButton">Continue</button>
+            <button className="mainButton" onClick={handleSubmit}>
+              Continue
+            </button>
           </div>
         </div>
       </div>
@@ -105,4 +158,4 @@ function transfer() {
   );
 }
 
-export default transfer;
+export default transferId;

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
+import axios from "../../../utils/axios";
+import Cookies from "js-cookie";
+import Router, { useRouter } from "next/router";
 
 const board = {
   borderRadius: "20px",
@@ -9,6 +12,47 @@ const board = {
 };
 
 function confirmation() {
+  const router = useRouter();
+  const transferName = Cookies.get("transferName");
+  const transferImage = Cookies.get("transferImage");
+  const transferNoTelp = Cookies.get("transferNoTelp");
+  const dateTransfer = Cookies.get("dateTransfer");
+  const balance = Cookies.get("balance");
+  const dataTransfer = Cookies.get("dataTransfer")
+    ? JSON.parse(Cookies.get("dataTransfer"))
+    : { amount: "", notes: "", receiverId: router.query.id };
+
+  const [form, setForm] = useState({
+    pin: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    console.log(form);
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      amount: dataTransfer.amount,
+      notes: dataTransfer.notes,
+      receiverId: dataTransfer.receiverId,
+    };
+    try {
+      const result1 = await axios.get(`/user/pin?pin=${form.pin}`);
+      console.log(result1);
+      if (result1.data.msg === "Correct pin") {
+        const transaction = await axios.post(`/transaction/transfer`, data);
+        Router.push(`/transfer/status/${transaction.data.data.id}`);
+        Cookies.set(`statusTf`, transaction.data.msg);
+        console.log("transfer success");
+      } else {
+        alert("wrong pin");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout title="Transfer" menu="transfer">
       <div>
@@ -23,12 +67,21 @@ function confirmation() {
             <div className="row " style={{ height: "50px", width: "420px" }}>
               <div className="col-1">
                 <div style={{ height: "50px", width: "40px" }}>
-                  <Image
-                    src={"/profile default.png"}
-                    width={"50px"}
-                    height={"45px"}
-                    style={{ borderRadius: "15px" }}
-                  />
+                  {transferImage === "null" ? (
+                    <Image
+                      src={"/profile default.png"}
+                      width={"50px"}
+                      height={"45px"}
+                      style={{ borderRadius: "15px" }}
+                    />
+                  ) : (
+                    <img
+                      src={process.env.URL_CLOUDINARY + transferImage}
+                      width={"50px"}
+                      height={"45px"}
+                      style={{ borderRadius: "15px" }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -40,13 +93,15 @@ function confirmation() {
                 }}
               >
                 <div style={{ fontSize: "12px" }}>
-                  <b>Samuel Suhi</b>
+                  <b>{transferName}</b>
                 </div>
                 <div
                   className="text-secondary my-2"
                   style={{ fontSize: "8px" }}
                 >
-                  +62 813-8492-9994
+                  {transferNoTelp !== "null"
+                    ? transferNoTelp
+                    : "number phond haven't added"}
                 </div>
               </div>
             </div>
@@ -61,7 +116,7 @@ function confirmation() {
             <div className="row">
               <div style={{ fontSize: "10px" }}>Ammont</div>
               <div className="text-secondary my-2" style={{ fontSize: "12px" }}>
-                <b> Rp100.000 </b>
+                <b> Rp. {dataTransfer.amount} </b>
               </div>
             </div>
           </div>
@@ -69,7 +124,7 @@ function confirmation() {
             <div className="row">
               <div style={{ fontSize: "10px" }}>Balance Left</div>
               <div className="text-secondary my-2" style={{ fontSize: "12px" }}>
-                <b> Rp20.000 </b>
+                <b> Rp.{balance - dataTransfer.amount} </b>
               </div>
             </div>
           </div>
@@ -77,7 +132,7 @@ function confirmation() {
             <div className="row">
               <div style={{ fontSize: "10px" }}>Date & Time</div>
               <div className="text-secondary my-2" style={{ fontSize: "12px" }}>
-                <b> May 11, 2020 - 12.20 </b>
+                <b> {dateTransfer} </b>
               </div>
             </div>
           </div>
@@ -85,22 +140,22 @@ function confirmation() {
             <div className="row">
               <div style={{ fontSize: "10px" }}>Notes</div>
               <div className="text-secondary my-2" style={{ fontSize: "12px" }}>
-                <b> For buying some socks </b>
+                <b> {dataTransfer.notes} </b>
               </div>
             </div>
           </div>
           <div className="d-flex justify-content-end">
             <button
               className="mainButton"
-              data-toggle="modal"
-              data-target="#exampleModal"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal2"
               type="button"
             >
               Continue
             </button>
             <div
               className="modal fade"
-              id="exampleModal"
+              id="exampleModal2"
               tabIndex="-1"
               role="dialog"
               aria-labelledby="exampleModalLabel"
@@ -115,7 +170,7 @@ function confirmation() {
                     <button
                       type="button"
                       className="close"
-                      data-dismiss="modal"
+                      data-bs-dismiss="modal"
                       aria-label="Close"
                     >
                       <span aria-hidden="true">&times;</span>
@@ -127,14 +182,25 @@ function confirmation() {
                   </div>
                   <br />
                   <div className="form-group">
-                    <div class="container">
-                      <div class="pinBox">
-                        <input class="pinEntry" type="text" maxlength="6" />
+                    <div className="container">
+                      <div className="pinBox">
+                        <input
+                          className="pinEntry"
+                          type="text"
+                          maxLength="6"
+                          name="pin"
+                          onChange={handleChangeText}
+                        />
                       </div>
                     </div>
                   </div>
                   <div className="modal-footer">
-                    <button type="button" className="btn btn-primary">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      onClick={handleSubmit}
+                    >
                       Continue
                     </button>
                   </div>
