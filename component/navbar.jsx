@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { Dropdown } from "react-bootstrap";
 
 const navbar = {
   borderRadius: "0 0 25px 25px",
@@ -17,6 +18,18 @@ export default function Navbar(props) {
   const dataHistory = Cookies.get("history")
     ? JSON.parse(Cookies.get("history"))
     : [];
+  const [data, setData] = useState({});
+
+  const [datahistory, setDatahistory] = useState([]);
+
+  useEffect(() => {
+    setData({
+      name: name,
+      noTelp: noTelp,
+      image: image,
+    });
+    setDatahistory(dataHistory);
+  }, [name, image]);
 
   return (
     <div>
@@ -32,7 +45,7 @@ export default function Navbar(props) {
         <div className="dropdown d-flex justify-content-end w-75">
           <div className="d-flex mx-3" style={{ widht: "120px" }}>
             <div className="m-1 mx-2">
-              {image === "null" ? (
+              {data.image === "null" ? (
                 <Image
                   src={"/profile default.png"}
                   width={"50px"}
@@ -41,7 +54,7 @@ export default function Navbar(props) {
                 />
               ) : (
                 <img
-                  src={process.env.URL_CLOUDINARY + image}
+                  src={process.env.URL_CLOUDINARY + data.image}
                   width={"50px"}
                   height={"45px"}
                   style={{ borderRadius: "15px" }}
@@ -49,39 +62,32 @@ export default function Navbar(props) {
               )}
             </div>
             <div className="m-1">
-              <strong>{name}</strong>
+              <strong>{data.name ? data.name : ""}</strong>
               <p className="mt-1" style={{ fontSize: "10px" }}>
-                {noTelp === "null" ? "phone number not add" : noTelp}
+                {data.noTelp === "null" ? "phone number not add" : data.noTelp}
               </p>
             </div>
           </div>
-          <a
-            className="btn dropdown-toggle"
-            href="#"
-            role="button"
-            id="dropdownMenuLink"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+        </div>
+        <Dropdown>
+          <Dropdown.Toggle variant="transparant" id="dropdown-basic">
             <Image src="/icon bell.png" width={"30px"} height={"30px"} />
-          </a>
-
-          <ul className="dropdown-menu w-50" aria-labelledby="dropdownMenuLink">
-            {/* {dataHistory.map((item) => item.id)} */}
-            {dataHistory.map((item) => (
-              <li key={item.id}>
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            {datahistory.map((item) => (
+              <Dropdown.Item key={item.id}>
                 <div className="m-2 mb-4 mx-3 content-card" key={item.id}>
                   <div className="container row">
                     <div className="col-2 w-25">
-                      {item.type === "topup" ? (
+                      {item.type === "send" ? (
                         <Image
-                          src={"/arrow-down.png"}
+                          src={"/arrow-up.png"}
                           width={"40px"}
                           height={"40px"}
                         />
                       ) : (
                         <Image
-                          src={"/arrow-up.png"}
+                          src={"/arrow-down.png"}
                           width={"40px"}
                           height={"40px"}
                         />
@@ -97,10 +103,10 @@ export default function Navbar(props) {
                     </div>
                   </div>
                 </div>
-              </li>
+              </Dropdown.Item>
             ))}
-          </ul>
-        </div>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     </div>
   );

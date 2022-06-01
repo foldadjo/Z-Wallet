@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import axios from "../../utils/axios";
 
 const board = {
   borderRadius: "20px",
@@ -9,6 +12,36 @@ const board = {
 };
 
 function profile() {
+  const router = useRouter();
+  const id = Cookies.get("id");
+  const [form, setForm] = useState({
+    noTelp: "",
+  });
+
+  const handleChangeText = (event) => {
+    const { name, value, files } = event.target;
+    if (name === "image") {
+      setForm({ ...form, [name]: files[0] });
+      setData({ ...data, image: URL.createObjectURL(files[0]) });
+      console.log(image);
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
+
+  const handleChangephone = async () => {
+    const changePhone = { noTelp: form.noTelp };
+    try {
+      const resultPhone = await axios.patch(`/user/profile/${id}`, changePhone);
+      console.log(resultPhone);
+      Cookies.set("noTelp", resultPhone.data.data.noTelp);
+      router.push("/profile");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(form.noTelp);
   return (
     <Layout title="Manage Phone" menu="profile">
       <div>
@@ -35,6 +68,8 @@ function profile() {
               placeholder="Enter your phone number"
               aria-label="Phone Number"
               aria-describedby="basic-addon1"
+              name="noTelp"
+              onChange={handleChangeText}
             />
             <div className="input-group-addon">
               <i className="fa fa-eye-slash" aria-hidden="true"></i>
@@ -43,7 +78,10 @@ function profile() {
           </div>
           <br />
           <div className="d-flex justify-content-center row my-3 ">
-            <button className="authButton w-50"> Edit Phone Number </button>
+            <button className="authButton w-50" onClick={handleChangephone}>
+              {" "}
+              Edit Phone Number{" "}
+            </button>
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 const board = {
   borderRadius: "20px",
@@ -8,7 +11,36 @@ const board = {
   padding: "5px",
 };
 
-function profile() {
+function changePass() {
+  const router = useRouter();
+  const id = Cookies.get("id");
+  const [form, setForm] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      oldPassword: form.oldPassword,
+      newPassword: form.newPassword,
+      confirmPassword: form.confirmPassword,
+    };
+    try {
+      const result = await axios.patch(`/user/password/${id}`, data);
+      console.log(result);
+      alert(result.data.msg);
+      router.push("/profile");
+    } catch (error) {
+      alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
+  console.log(form);
   return (
     <Layout title="Change Password" menu="profile">
       <div>
@@ -35,6 +67,8 @@ function profile() {
               placeholder="Current password"
               aria-label="Password"
               aria-describedby="basic-addon1"
+              onChange={handleChangeText}
+              name="oldPassword"
             />
             <div className="input-group-addon">
               <i className="fa fa-eye-slash" aria-hidden="true"></i>
@@ -51,6 +85,8 @@ function profile() {
               placeholder="New password"
               aria-label="Password"
               aria-describedby="basic-addon1"
+              onChange={handleChangeText}
+              name="newPassword"
             />
             <div className="input-group-addon">
               <i className="fa fa-eye-slash" aria-hidden="true"></i>
@@ -67,6 +103,8 @@ function profile() {
               placeholder="Repeat new password"
               aria-label="Password"
               aria-describedby="basic-addon1"
+              onChange={handleChangeText}
+              name="confirmPassword"
             />
             <div className="input-group-addon">
               <i className="fa fa-eye-slash" aria-hidden="true"></i>
@@ -75,7 +113,10 @@ function profile() {
           </div>
           <br />
           <div className="d-flex justify-content-center row my-3 ">
-            <button className="authButton w-50"> Change Password </button>
+            <button className="authButton w-50" onClick={handleSubmit}>
+              {" "}
+              Change Password{" "}
+            </button>
           </div>
         </div>
       </div>
@@ -83,4 +124,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default changePass;

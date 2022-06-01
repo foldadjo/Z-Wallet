@@ -32,7 +32,7 @@ axiosApiIntances.interceptors.response.use(
     // Do something with response error
     if (error.response.status === 403) {
       localStorage.clear();
-      Cookie.clear();
+      Cookies.clear();
       window.location.href = "/auth/login";
     }
     return Promise.reject(error);

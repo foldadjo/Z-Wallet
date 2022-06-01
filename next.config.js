@@ -22,10 +22,6 @@ const nextConfig = {
         source: "/register",
         destination: "/auth/register",
       },
-      {
-        source: "/:id",
-        destination: "/profile/:id",
-      },
     ];
   },
 };

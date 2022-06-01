@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
 import axios from "../../utils/axios";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 export default function resetPass() {

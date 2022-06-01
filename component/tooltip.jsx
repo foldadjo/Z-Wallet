@@ -40,6 +40,16 @@ function tooltip(props) {
     Cookies.remove("token");
     Cookies.remove("noTelp");
     Cookies.remove("image");
+    Cookies.remove("balance");
+    Cookies.remove("name");
+    Cookies.remove("dataTransfer");
+    Cookies.remove("statusTf");
+    Cookies.remove("dateTransfer");
+    Cookies.remove("transferImage");
+    Cookies.remove("transferNoTelp");
+    Cookies.remove("transferName");
+    Cookies.remove("history");
+
     localStorage.clear();
     router.push("/login");
   };

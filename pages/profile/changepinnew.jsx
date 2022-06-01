@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/main";
-import Link from "next/link";
+import axios from "../../utils/axios";
+import Cookies from "js-cookie";
+import Router, { useRouter } from "next/router";
 
 const board = {
   borderRadius: "20px",
@@ -8,7 +10,29 @@ const board = {
   padding: "5px",
 };
 
-function profile() {
+function changePinNew() {
+  const router = useRouter();
+  const id = Cookies.get("id");
+  const [form, setForm] = useState({
+    pin: "",
+  });
+
+  const handleChangeText = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const result = await axios.patch(`/user/pin/${id}`, form);
+      console.log(result);
+      alert(result.data.msg);
+      router.push("/profile");
+    } catch (error) {
+      alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
+  console.log(form);
   return (
     <Layout title="Change PIN" menu="profile">
       <div>
@@ -26,16 +50,21 @@ function profile() {
           <br />
           <div className="d-flex justify-content-center my-3">
             <div className="pinBox">
-              <input className="pinEntry" type="text" maxlength="6" />
+              <input
+                className="pinEntry"
+                type="text"
+                maxLength="6"
+                onChange={handleChangeText}
+                name="pin"
+              />
             </div>
           </div>
           <div className="d-flex justify-content-center">
             <div className="w-50">
-              <Link href="/profile">
-                <a>
-                  <button className="authButton w-100"> Continue </button>
-                </a>
-              </Link>
+              <button className="authButton w-100" onClick={handleSubmit}>
+                {" "}
+                Continue{" "}
+              </button>
             </div>
           </div>
           <br />
@@ -45,4 +74,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default changePinNew;

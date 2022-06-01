@@ -59,9 +59,9 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           Powered by{" "}
-          <span className={styles.logo}>
+          <div className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
+          </div>
         </a>
       </footer>
     </div>

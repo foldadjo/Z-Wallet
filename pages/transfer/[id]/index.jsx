@@ -4,7 +4,6 @@ import Image from "next/image";
 import axios from "../../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import cookies from "next-cookies";
 
 const board = {
   borderRadius: "20px",
@@ -37,7 +36,6 @@ function transferId() {
 
   const handleChangeText = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log(form);
   };
 
   const handleSubmit = async () => {
