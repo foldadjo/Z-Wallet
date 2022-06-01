@@ -20,7 +20,6 @@ function tooltip(props) {
   const [form, setForm] = useState({
     amount: "",
   });
-  console.log(form);
 
   const handleChangeText = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

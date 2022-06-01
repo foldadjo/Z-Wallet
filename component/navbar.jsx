@@ -10,36 +10,27 @@ const navbar = {
   boxShadow: "#E5E5E5 0px 2px 10px 2px",
 };
 
-export default function index() {
+export default function Navbar(props) {
   const router = useRouter();
   const name = Cookies.get("name");
   const noTelp = Cookies.get("noTelp");
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getNotivication;
-  }, []);
-  // const pathname = router.pathname;
-  const getNotivication = async () => {
-    try {
-      const id = Cookies.get("id");
-      const result = await axios.get(
-        `transaction/history?page=1&limit=5&filter=MONTH`
-      );
-      setData(result.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dataHistory = Cookies.get("history")
+    ? JSON.parse(Cookies.get("history"))
+    : [];
 
   return (
     <div>
-      <nav className="navbar navbar-light bg-white" style={navbar}>
-        <div className="container-fluid">
+      <div
+        className="d-flex justify-content-beetween bg-white pt-4"
+        style={navbar}
+      >
+        <div className="container-fluid w-25">
           <a className="navbar-brand m-3 mx-5 px-3">
             <Image src="/Zwallet-blue.png" width={"82px"} height={"20px"} />
           </a>
-          <form className="d-flex mx-3">
+        </div>
+        <div className="dropdown d-flex justify-content-end w-75">
+          <div className="d-flex mx-3" style={{ widht: "120px" }}>
             <div className="m-1 mx-2">
               <Image
                 src={"/profile default.png"}
@@ -51,44 +42,55 @@ export default function index() {
             <div className="m-1">
               <strong>{name}</strong>
               <p className="mt-1" style={{ fontSize: "10px" }}>
-                {noTelp === undefined ? "phone number not add" : noTelp}
+                {noTelp === "null" ? "phone number not add" : noTelp}
               </p>
             </div>
-            <div className="m-1 my-3 dropdown">
-              <div
-                className="dropbtn"
-                role="button"
-                id="dropdownMenuLink"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <Image src="/icon bell.png" width={"30px"} height={"30px"} />{" "}
-              </div>
-              <div className="p-2 m-3 dropdown-content">
-                {data.map((item) => (
-                  <div className="m-2 mb-4 content-card" key={item.id}>
-                    <div className="container row">
-                      <div className="col-2 w-25">
+          </div>
+          <a
+            className="btn dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuLink"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <Image src="/icon bell.png" width={"30px"} height={"30px"} />
+          </a>
+
+          <ul className="dropdown-menu w-50" aria-labelledby="dropdownMenuLink">
+            {/* {dataHistory.map((item) => item.id)} */}
+            {dataHistory.map((item) => (
+              <li key={item.id}>
+                <div className="m-2 mb-4 mx-3 content-card" key={item.id}>
+                  <div className="container row">
+                    <div className="col-2 w-25">
+                      {item.type === "topup" ? (
                         <Image
                           src={"/arrow-down.png"}
                           width={"40px"}
                           height={"40px"}
                         />
-                      </div>
-                      <div className="col-6">
-                        <div className="text-muted">{item.notes}</div>
-                        <div>
-                          <b> Rp. {item.amount} </b>
-                        </div>
+                      ) : (
+                        <Image
+                          src={"/arrow-up.png"}
+                          width={"40px"}
+                          height={"40px"}
+                        />
+                      )}
+                    </div>
+                    <div className="col-6">
+                      <div className="text-muted">{item.type}</div>
+                      <div>
+                        <b> Rp. {item.amount} </b>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </form>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-      </nav>
+      </div>
     </div>
   );
 }

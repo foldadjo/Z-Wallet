@@ -11,7 +11,7 @@ export default function CSR() {
   const getDataUser = async () => {
     try {
       const result = await axios.get(
-        `user?page=1&limit=1&search=&sort=firstName ASC`
+        `user?page=1&limit=3&search=&sort=firstName ASC`
       );
       setData(result.data.data);
       console.log(result.data.data);

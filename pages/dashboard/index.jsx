@@ -50,8 +50,14 @@ function dashboard() {
       const result = await axios.get(`/user/profile/${id}`);
       const dashboard = await axios.get(`/dashboard/${id}`);
       const history = await axios.get(
-        `/transaction/history?page=1&limit=5&filter=MONTH`
+        `/transaction/history?page=1&limit=5&filter=`
       );
+      Cookies.set(
+        "name",
+        result.data.data.firstName + " " + result.data.data.lastName
+      );
+      Cookies.set("noTelp", result.data.data.noTelp);
+      Cookies.set("history", JSON.stringify(history.data.data));
       setUserdata(result.data.data);
       setDashboard(dashboard.data.data);
       setHistory(history.data.data);
@@ -275,7 +281,7 @@ function dashboard() {
                           />
                         ) : (
                           <Image
-                            src={`/${item.image}`}
+                            src={`${process.env.URL_CLOUDINARY}/${item.image}`}
                             width={"50px"}
                             height={"45px"}
                             style={{ borderRadius: "15px" }}
@@ -288,7 +294,7 @@ function dashboard() {
                       style={{ height: "50px", width: "120px" }}
                     >
                       <div style={{ fontSize: "12px" }}>
-                        <b>Default People</b>
+                        <b>{item.fullName}</b>
                       </div>
                       <div
                         className="text-secondary"
@@ -299,12 +305,12 @@ function dashboard() {
                     </div>
                     <br />
                   </div>
-                  {item.type === "topup" ? (
-                    <div className="text-success" style={{ fontSize: "10px" }}>
+                  {item.type === "send" ? (
+                    <div className="text-danger" style={{ fontSize: "10px" }}>
                       <b>{"+ Rp. " + item.amount}</b>
                     </div>
                   ) : (
-                    <div className="text-danger" style={{ fontSize: "10px" }}>
+                    <div className="text-success" style={{ fontSize: "10px" }}>
                       <b>{"- Rp. " + item.amount}</b>
                     </div>
                   )}
