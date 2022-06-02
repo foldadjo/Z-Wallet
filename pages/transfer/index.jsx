@@ -20,13 +20,29 @@ const input = {
   fontSize: "10px",
 };
 
+const button = {
+  borderRadius: "10px",
+  backgroundColor: "light",
+  border: "white solid 1px",
+  padding: "5px 5px 5px 0",
+  width: "100%",
+  height: "100%",
+  cursor: "pointer,",
+};
+
 function transfer() {
   const router = useRouter();
   const [userdata, setUserdata] = useState([]);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("firstName ASC");
 
   const handleFilter = (e) => {
     e.key === "Enter" ? setSearch(e.target.value) : null;
+    getUserdata();
+  };
+
+  const handleChangeFilter = (e) => {
+    setFilter(e.target.value);
     getUserdata();
   };
 
@@ -34,12 +50,12 @@ function transfer() {
 
   useEffect(() => {
     getUserdata();
-  }, [search]);
+  }, [search, filter]);
 
   const getUserdata = async () => {
     try {
       const result = await axios.get(
-        `/user?page=1&limit=10&search=${search}&sort=firstName ASC`
+        `/user?page=1&limit=10&search=${search}&sort=${filter}`
       );
       setUserdata(result.data.data);
       console.log(result);
@@ -65,13 +81,29 @@ function transfer() {
             </div>
           </div>
           <br />
-          <input
-            className="text-secondary bg-light"
-            style={input}
-            type="text"
-            placeholder="Search receiver here"
-            onKeyPress={(e) => handleFilter(e)}
-          />
+          <div className="d-flex justify-content-between">
+            <div className="w-75">
+              <input
+                className="text-secondary bg-light"
+                style={input}
+                type="text"
+                placeholder="Search receiver here"
+                onKeyPress={(e) => handleFilter(e)}
+              />
+            </div>
+            <div>
+              <select
+                name="sort"
+                className="sometimes__button2"
+                style={button}
+                onClick={handleChangeFilter}
+              >
+                <option value="">--Select Filter--</option>
+                <option value="firstName ASC">A to Z</option>
+                <option value="firstName DESC">Z to A</option>
+              </select>
+            </div>
+          </div>
           <br />
           <br />
           {userdata.map((item) => (
