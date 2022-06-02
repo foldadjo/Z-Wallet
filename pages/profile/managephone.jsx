@@ -36,12 +36,12 @@ function profile() {
       console.log(resultPhone);
       Cookies.set("noTelp", resultPhone.data.data.noTelp);
       router.push("/profile");
+      alert("Success Change number phone");
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(form.noTelp);
   return (
     <Layout title="Manage Phone" menu="profile">
       <div>

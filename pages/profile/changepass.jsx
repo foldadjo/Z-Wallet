@@ -40,7 +40,7 @@ function changePass() {
       console.log(error);
     }
   };
-  console.log(form);
+
   return (
     <Layout title="Change Password" menu="profile">
       <div>

@@ -8,7 +8,7 @@ export default function resetPass() {
   const router = useRouter();
   const [form, setForm] = useState({
     email: "",
-    linkDirect: "http://localhost:3000/auth/resetpassconfirm",
+    linkDirect: `${process.env.URL_FRONTEND}/auth/resetpassconfirm`,
   });
 
   const handleChangeText = (e) => {
@@ -25,7 +25,7 @@ export default function resetPass() {
       console.log(error);
     }
   };
-  console.log(form);
+
   return (
     <Layout title="Reset Password Page">
       <div className="container">

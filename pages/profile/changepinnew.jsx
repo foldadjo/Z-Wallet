@@ -32,7 +32,7 @@ function changePinNew() {
       console.log(error);
     }
   };
-  console.log(form);
+
   return (
     <Layout title="Change PIN" menu="profile">
       <div>

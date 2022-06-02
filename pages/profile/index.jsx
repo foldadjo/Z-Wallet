@@ -54,6 +54,7 @@ function profile() {
         name:
           resultName.data.data.firstName + " " + resultName.data.data.lastName,
       });
+      alert(resultName.data.msg);
     } catch (error) {
       console.log(error);
     }
@@ -76,6 +77,7 @@ function profile() {
         ...data,
         image: "null",
       });
+      alert(resultDelete.data.msg);
     } catch (error) {
       console.log(error);
     }
@@ -98,13 +100,15 @@ function profile() {
       const resultUpdate = await axios.patch(`/user/image/${id}`, formData);
       alert("Success Change Image");
       console.log(resultUpdate);
-      const getData = await axios.get(`/user/profile/${id}`);
-      Cookies.set("image", getData.data.data.image);
-      console.log(getData);
-      setData({
-        ...data,
-        image: getData.data.data.image,
-      });
+      if (resultUpdate) {
+        const getData = await axios.get(`/user/profile/${id}`);
+        Cookies.set("image", getData.data.data.image);
+        console.log(getData);
+        setData({
+          ...data,
+          image: getData.data.data.image,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
