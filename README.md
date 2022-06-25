@@ -37,7 +37,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Documentation
 
-### Link Netlify
+### Link Varcel
+- [varcel](https://pay-jauhar.vercel.app/)
 
 
 ### Login Page

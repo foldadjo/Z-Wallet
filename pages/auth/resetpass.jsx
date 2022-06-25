@@ -29,20 +29,19 @@ export default function resetPass() {
   return (
     <Layout title="Reset Password Page">
       <div className="container">
-        <h5 className="pb-3" style={{ lineHeight: "160%" }}>
+        <h5 className="pb-3" style={{ lineHeight: "160%", marginRight: "12%" }}>
           <strong>
-            Did You Forgot Your Password? <br />
-            Don’t Worry, You Can Reset Your <br />
+            Did You Forgot Your Password? Don’t Worry, You Can Reset Your
             Password In a Minutes.
           </strong>
         </h5>
         <div
           className="text-muted"
-          style={{ fontSize: "12px", lineHeight: "160%" }}
+          style={{ fontSize: "12px", lineHeight: "160%", marginRight: "12%" }}
         >
-          To reset your password, you must type your e-mail and we <br /> will
-          send a link to your email and you will be directed to the <br /> reset
-          password screens.
+          To reset your password, you must type your e-mail and we will send a
+          link to your email and you will be directed to the reset password
+          screens.
         </div>
         <div className="mt-5 mb-3 row">
           <div className="col-2">

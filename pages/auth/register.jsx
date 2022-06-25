@@ -3,9 +3,11 @@ import Layout from "../../component/Layout/auth";
 import Image from "next/image";
 import axios from "../../utils/axios";
 import { useRouter } from "next/router";
+import { BsEyeSlash, BsEye } from "react-icons/bs";
 
 export default function register() {
   const router = useRouter();
+  const [passHide, setPassHide] = useState(true);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -17,10 +19,20 @@ export default function register() {
   };
   const handleSubmit = async () => {
     try {
-      const result = await axios.post("/auth/register", form);
-      console.log(result);
-      router.push("/login");
-      alert("succes register");
+      if (form.firstName === "" || form.email || form.password) {
+        alert("form is require");
+      } else if (form.password.length < 8) {
+        alert("Your password must be at least 8 characters");
+      } else if (form.password.toLowerCase() === form.password) {
+        alert("Your password must contain at least one uppercase.");
+      } else if (form.password.search(/[0-9]/) < 0) {
+        alert("Your password must contain at least one digit number.");
+      } else {
+        const result = await axios.post("/auth/register", form);
+        console.log(result);
+        router.push("/");
+        alert("succes register");
+      }
     } catch (error) {
       console.log(error);
       alert(error.response.data.msg);
@@ -30,19 +42,19 @@ export default function register() {
   return (
     <Layout title="Register Page">
       <div className="container">
-        <h5 className="pb-3" style={{ lineHeight: "160%" }}>
+        <h5 className="pb-3" style={{ lineHeight: "160%", marginRight: "12%" }}>
           <strong>
-            Start Accessing Banking Needs <br /> With All Devices and All
-            Platforms <br /> With 30.000+ Users
+            Start Accessing Banking Needs With All Devices and All Platforms
+            With 30.000+ Users
           </strong>
         </h5>
         <div
           className="text-muted"
-          style={{ fontSize: "12px", lineHeight: "160%" }}
+          style={{ fontSize: "12px", lineHeight: "160%", marginRight: "12%" }}
         >
-          Transfering money is eassier than ever, you can access <br /> Zwallet
-          wherever you are. Desktop, laptop, mobile phone? <br /> we cover all
-          of that for you!
+          Transfering money is eassier than ever, you can access Zwallet
+          wherever you are. Desktop, laptop, mobile phone? we cover all of that
+          for you!
         </div>
         <div className="mt-5 mb-3 row">
           <div className="col-2">
@@ -94,16 +106,23 @@ export default function register() {
             <Image src={"/icon lock.png"} width={"30px"} height={"30px"} />
           </div>
           <input
-            className="col-8 bg-light border border-light"
-            type="password"
+            className="col-7 bg-light border border-light"
+            type={passHide === true ? "password" : "text"}
             placeholder="Enter your password"
             aria-label="Password"
             aria-describedby="basic-addon1"
             onChange={handleChangeText}
             name="password"
           />
-          <div className="input-group-addon">
-            <i className="fa fa-eye-slash" aria-hidden="true"></i>
+          <div
+            className="col-1 input-group-addon"
+            onClick={
+              passHide === true
+                ? () => setPassHide(false)
+                : () => setPassHide(true)
+            }
+          >
+            {passHide === true ? <BsEye size={20} /> : <BsEyeSlash size={20} />}
           </div>
           <hr className="col-10" />
           <dev className="col-7"></dev>
@@ -114,7 +133,7 @@ export default function register() {
         </button>
         <div className="col-10 text-center">
           Already have an account? Let’s{" "}
-          <a href="login" style={{ cursor: "pointer" }}>
+          <a href="/" style={{ cursor: "pointer" }}>
             Login
           </a>
         </div>

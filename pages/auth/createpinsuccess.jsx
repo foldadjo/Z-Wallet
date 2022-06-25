@@ -13,16 +13,15 @@ export default function CreatePinSucces() {
     <Layout title="Create Pin Success">
       <div className="container">
         <Image src={"/success.png"} width={"50px"} height={"50px"} />
-        <h5 className="pb-3" style={{ lineHeight: "160%" }}>
+        <h5 className="pb-3" style={{ lineHeight: "160%", marginRight: "12%" }}>
           <strong>Your PIN Was Successfully Created</strong>
         </h5>
         <div
           className="text-muted"
-          style={{ fontSize: "12px", lineHeight: "160%" }}
+          style={{ fontSize: "12px", lineHeight: "160%", marginRight: "12%" }}
         >
-          Your PIN was successfully created and you can now access <br /> all
-          the features in Zwallet. Login to your new account and <br /> start
-          exploring!
+          Your PIN was successfully created and you can now access all the
+          features in Zwallet. Login to your new account and start exploring!
         </div>
         <button className="authButton" onClick={handleSubmit}>
           {" "}
