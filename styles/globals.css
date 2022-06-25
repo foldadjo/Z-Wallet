@@ -49,28 +49,11 @@ a {
   border: 2px solid #6379f4;
 }
 
-/* .dropbtn {
-  border: none;
-  cursor: pointer;
+.notification {
+  width: 350px;
+  height: 600px;
+  overflow-y: scroll;
 }
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  left: -1550%;
-  top: 50%;
-  background-color: white;
-  border-radius: 5px;
-  border: white solid;
-  box-shadow: #e5e5e5 0px 2px 10px 2px;
-  padding: 5px;
-  z-index: 1;
-  width: 500px;
-} */
 
 .content-card {
   border-radius: 5px;
@@ -91,10 +74,6 @@ a {
   border: #fafafa solid;
   background-color: #fafafa;
 }
-
-/* .dropdown:hover .dropdown-content {
-  display: block;
-} */
 
 /* .................................... */
 
@@ -139,6 +118,57 @@ a {
   display: none;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.userDashboard {
+  justify-content: flex-end;
+  width: 75%;
+}
+
+.m6 {
+  padding-top: 12%;
+}
+
+.cardDashboard {
+  width: 1200px;
+}
+.childern {
+  flex: 8;
+}
+
+.tooltipMain {
+  flex: 3;
+}
+
+/* ......dashboard...... */
+
+.headDashboard {
+  display: flex;
+  align-items: center;
+}
+.belence {
+  flex: 1;
+}
+.balanceDashboard {
+  font-size: 40px;
+}
+.buttonDashboard {
+  flex: 1;
+}
+.buttonDashboardResponsive {
+  display: none;
+}
+.historyDashboard {
+  flex: 5;
+  padding: 7%;
+}
+.graphDashboard {
+  flex: 5;
+  margin-right: 20px;
+}
+
 @media (max-width: 1000px) {
   .authLayer {
     display: none;
@@ -155,5 +185,48 @@ a {
     display: flex;
     margin-bottom: 10%;
     margin-left: 3%;
+  }
+  .logoDashboard {
+    display: none;
+  }
+  .tooltipMain {
+    display: none;
+  }
+  .userDashboard {
+    justify-content: space-between !important;
+    width: 100%;
+  }
+  .childern {
+    flex: 12;
+  }
+  .cardDashboard {
+    margin-top: 8%;
+    width: 100%;
+  }
+  .buttonDashboard {
+    display: none;
+  }
+  .buttonDashboardResponsive {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .cardDashboard {
+    margin-top: 20%;
+  }
+  .balanceDashboard {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 400px) {
+  .cardDashboard {
+    margin-top: 22%;
+  }
+  .balanceDashboard {
+    font-size: 25px;
   }
 }

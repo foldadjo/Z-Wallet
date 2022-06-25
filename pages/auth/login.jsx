@@ -28,7 +28,6 @@ export default function login() {
         router.push("/auth/createpin");
       } else {
         router.push("/dashboard");
-        alert("login success");
       }
     } catch (error) {
       alert(error.response.data.msg);

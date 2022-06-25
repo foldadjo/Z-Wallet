@@ -175,7 +175,10 @@ function profile() {
                 className="bg-white border border-white"
                 // style={{ display: "none" }}
               >
-                <label className="custom-file-label" htmlFor="inputGroupFile02">
+                <label
+                  className="custom-file-label pointer"
+                  htmlFor="inputGroupFile02"
+                >
                   <Image src="/icon pen.png" width={"10px"} height={"12px"} />
                   &ensp; edit
                 </label>
@@ -245,7 +248,7 @@ function profile() {
                       <button
                         type="button"
                         className="btn btn-primary"
-                        // data-bs-dismiss="modal"
+                        data-bs-dismiss="modal"
                         onClick={handleChangename}
                       >
                         Update Name
@@ -253,7 +256,7 @@ function profile() {
                       <button
                         type="button"
                         className="btn btn-primary"
-                        // data-bs-dismiss="modal"
+                        data-bs-dismiss="modal"
                         onClick={handleUpdateImage}
                       >
                         Update image
@@ -280,7 +283,7 @@ function profile() {
           </div>
           <div
             onClick={() => gotoProfile()}
-            className="d-flex justify-content-center"
+            className="d-flex justify-content-center pointer"
           >
             <div className="w-50 d-flex content-card justify-content-between px-4 pt-1 mt-4">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
@@ -293,7 +296,7 @@ function profile() {
           </div>
           <div
             onClick={() => gotoChangepass()}
-            className="d-flex justify-content-center"
+            className="d-flex justify-content-center pointer"
           >
             <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
@@ -308,7 +311,7 @@ function profile() {
             onClick={() => gotoChangepin()}
             className="d-flex justify-content-center"
           >
-            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4">
+            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4 pointer">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
                 <b> Change PIN </b>
               </div>
@@ -321,7 +324,7 @@ function profile() {
             onClick={() => handleLogout()}
             className="d-flex justify-content-center"
           >
-            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4">
+            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4 pointer">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
                 <b> Logout </b>
               </div>

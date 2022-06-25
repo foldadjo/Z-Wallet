@@ -17,23 +17,6 @@ const context = {
 
 function tooltip(props) {
   const router = useRouter();
-  const [form, setForm] = useState({
-    amount: "",
-  });
-
-  const handleChangeText = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleTopup = async () => {
-    try {
-      const topUp = await axios.post("/transaction/top-up", form);
-      console.log(topUp);
-      window.open(topUp.data.data.redirectUrl);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleLogout = () => {
     Cookies.remove("id");
@@ -51,7 +34,7 @@ function tooltip(props) {
     Cookies.remove("history");
 
     localStorage.clear();
-    router.push("/login");
+    router.push("/");
   };
 
   return (
@@ -120,56 +103,6 @@ function tooltip(props) {
           <Image src="/icon topup.png" alt="icon" width={20} height={20} />
           &ensp; <b> Top Up </b>
         </button>
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Topup
-                </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                Enter the amount of monry, and click <br /> submit
-              </div>
-              <br />
-              <div className="form-group d-flex justify-content-center">
-                Rp.
-                <input
-                  type="number"
-                  className="form-control w-75"
-                  id="recipient-name"
-                  name="amount"
-                  onChange={handleChangeText}
-                />
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  // data-bs-dismiss="modal"
-                  onClick={handleTopup}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <br />
       <a

@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 const board = {
   borderRadius: "20px",
   boxShadow: "#E5E5E5 0px 2px 10px 2px",
-  padding: "5px",
 };
 
 const button = {
@@ -19,7 +18,7 @@ const button = {
   border: "white solid 1px",
   color: "white",
   padding: "5px 5px 5px 0",
-  width: "150px",
+  width: "140px",
   height: "50px",
   margin: "10px",
   cursor: "pointer,",
@@ -69,7 +68,6 @@ function dashboard() {
       const listIncome = dashboard.data.data.listIncome.map(
         (item) => item.total
       );
-
       const listExpense = dashboard.data.data.listExpense.map(
         (item) => item.total
       );
@@ -148,10 +146,10 @@ function dashboard() {
   return (
     <Layout title="Dashboard" menu="dashboard">
       <div>
-        <div className="bg-primary text-white row p-4 pb-1 mb-5" style={board}>
+        <div className="d-flex row p-3 bg-primary text-white" style={board}>
           <div className="col-8 my-2">
             <div className="text-light">Balance</div>
-            <div style={{ fontSize: "40px" }}>
+            <div className="balanceDashboard">
               <strong> Rp {userdata.balance} </strong>
             </div>
             <div className="text-light mt-2">
@@ -160,7 +158,7 @@ function dashboard() {
                 : userdata.noTelp}
             </div>
           </div>
-          <div className="col-3 mx-4">
+          <div className="buttonDashboard col-4">
             <button onClick={handleTransfer} style={button}>
               <Image
                 src="/icon transfer.png"
@@ -179,60 +177,28 @@ function dashboard() {
               <Image src="/icon topup.png" alt="icon" width={20} height={20} />
               &ensp; Top Up
             </button>
-            <div
-              className="modal fade"
-              id="exampleModal"
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
-                      Topup
-                    </h5>
-                    <button
-                      type="button"
-                      className="close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    Enter the amount of monry, and click <br /> submit
-                  </div>
-                  <br />
-                  <div className="form-group d-flex justify-content-center">
-                    Rp.
-                    <input
-                      type="number"
-                      className="form-control w-75"
-                      id="recipient-name"
-                      name="amount"
-                      onChange={handleChangeText}
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      // data-bs-dismiss="modal"
-                      onClick={handleTopup}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+        <div className="buttonDashboardResponsive">
+          <button onClick={handleTransfer} style={button}>
+            <Image src="/icon transfer.png" alt="icon" width={20} height={20} />
+            &ensp; Transfer
+          </button>
+          <button
+            style={button}
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            type="button"
+          >
+            <Image src="/icon topup.png" alt="icon" width={20} height={20} />
+            &ensp; Top Up
+          </button>
+        </div>
         <div className="row d-flex justify-content-between my-4">
-          <div className="col-6 p-4 bg-white text-dark" style={board}>
+          <div
+            className="graphDashboard p-4 bg-white text-dark buttonDashboard"
+            style={board}
+          >
             <div className="row">
               <div className="col-6">
                 <Image src={"/arrow-down.png"} width={"30px"} height={"30px"} />
@@ -255,7 +221,7 @@ function dashboard() {
             </div>
           </div>
           {/* <div className="col-1"></div> */}
-          <div className="col-5 bg-white text-dark p-4" style={board}>
+          <div className="historyDashboard bg-white text-dark" style={board}>
             <div
               className="d-flex justify-content-between"
               style={{ fontSize: "12px" }}
@@ -309,11 +275,11 @@ function dashboard() {
                   </div>
                   {item.type === "send" ? (
                     <div className="text-danger" style={{ fontSize: "10px" }}>
-                      <b>{"+ Rp. " + item.amount}</b>
+                      <b>{"- Rp. " + item.amount}</b>
                     </div>
                   ) : (
                     <div className="text-success" style={{ fontSize: "10px" }}>
-                      <b>{"- Rp. " + item.amount}</b>
+                      <b>{"+ Rp. " + item.amount}</b>
                     </div>
                   )}
                 </div>
