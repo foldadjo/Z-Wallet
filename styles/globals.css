@@ -191,6 +191,8 @@ a {
   width: 50%;
 }
 
+/* ...... Leanding Page .......  */
+
 @media (max-width: 1000px) {
   .authLayer {
     display: none;
