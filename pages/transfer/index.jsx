@@ -120,28 +120,26 @@ function transfer() {
               }
             >
               <div className="d-flex justify-content-between px-4 pt-3 content-card">
-                <div className="row" style={{ height: "50px", width: "420px" }}>
-                  <div className="col-1">
+                <div
+                  className="d-flex"
+                  style={{ height: "50px", width: "420px" }}
+                >
+                  <div>
                     <div style={{ height: "50px", width: "40px" }}>
-                      {item.image === null ? (
-                        <Image
-                          src={"/profile default.png"}
-                          width={"50px"}
-                          height={"45px"}
-                          style={{ borderRadius: "15px" }}
-                        />
-                      ) : (
-                        <img
-                          src={process.env.URL_CLOUDINARY + item.image}
-                          width={"50px"}
-                          height={"45px"}
-                          style={{ borderRadius: "15px" }}
-                        />
-                      )}
+                      <Image
+                        src={
+                          item.image === null || item.image === undefined
+                            ? "/profile default.png"
+                            : process.env.URL_CLOUDINARY + item.image
+                        }
+                        width={"50px"}
+                        height={"45px"}
+                        style={{ borderRadius: "15px" }}
+                      />
                     </div>
                   </div>
                   <div
-                    className="col-8"
+                    className="profileTransfer"
                     style={{
                       height: "50px",
                       width: "220px",

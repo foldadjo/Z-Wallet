@@ -110,11 +110,11 @@ function history() {
                 </div>
                 {item.type === "send" ? (
                   <div className="text-danger" style={{ fontSize: "10px" }}>
-                    <b>{"+ Rp. " + item.amount}</b>
+                    <b>{"- Rp. " + item.amount}</b>
                   </div>
                 ) : (
                   <div className="text-success" style={{ fontSize: "10px" }}>
-                    <b>{"- Rp. " + item.amount}</b>
+                    <b>{"+ Rp. " + item.amount}</b>
                   </div>
                 )}
               </div>

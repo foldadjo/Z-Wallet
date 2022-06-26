@@ -15,7 +15,7 @@ const input = {
   borderRadius: "5px",
   padding: "10px 20px",
   border: "0",
-  width: "30%",
+  width: "60%",
   height: "40px",
   fontSize: "30px",
   textAlign: "center",
@@ -65,28 +65,25 @@ function transferId() {
           </div>
           <br />
           <div className="d-flex content-card justify-content-between px-4 pt-3">
-            <div className="row" style={{ height: "50px", width: "420px" }}>
-              <div className="col-1">
+            <div className="d-flex" style={{ height: "50px", width: "420px" }}>
+              <div>
                 <div style={{ height: "50px", width: "40px" }}>
-                  {transferImage === "null" ? (
-                    <Image
-                      src={"/profile default.png"}
-                      width={"50px"}
-                      height={"45px"}
-                      style={{ borderRadius: "15px" }}
-                    />
-                  ) : (
+                  <>
                     <img
-                      src={process.env.URL_CLOUDINARY + transferImage}
+                      src={
+                        transferImage === undefined || transferImage === "null"
+                          ? "/profile default.png"
+                          : process.env.URL_CLOUDINARY + transferImage
+                      }
                       width={"50px"}
                       height={"45px"}
                       style={{ borderRadius: "15px" }}
                     />
-                  )}
+                  </>
                 </div>
               </div>
               <div
-                className="col-8"
+                className="profileTransfer"
                 style={{
                   height: "50px",
                   width: "220px",
@@ -130,22 +127,26 @@ function transferId() {
           </div>
           <br />
           <br />
-          <div className="row d-flex justify-content-center">
-            <div className="col-1">
-              <Image src={"/icon pen.png"} width={"30px"} height={"30px"} />
+          <div>
+            <div className="d-flex noteForTransfer">
+              <div className="imageTransfer">
+                <Image src={"/icon pen.png"} width={"30px"} height={"30px"} />
+              </div>
+              <div className="noteTransfer">
+                <input
+                  className="bg-white border border-white"
+                  type="text"
+                  placeholder="Add some notes"
+                  name="notes"
+                  onChange={handleChangeText}
+                />
+              </div>
             </div>
-            <input
-              className="col-4 bg-white border border-white"
-              type="text"
-              placeholder="Add some notes"
-              name="notes"
-              onChange={handleChangeText}
-            />
             <div className="row d-flex justify-content-center mt-1">
               <hr className="col-5" />
             </div>
           </div>
-          <div className="d-flex justify-content-end">
+          <div className="d-flex buttonPosition">
             <button className="mainButton" onClick={handleSubmit}>
               Continue
             </button>

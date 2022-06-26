@@ -34,6 +34,10 @@ a {
   color: #6379f4;
 }
 
+.buttonPosition {
+  justify-content: end;
+}
+
 .mainButton {
   background-color: #6379f4;
   border: #6379f4;
@@ -42,11 +46,6 @@ a {
   height: 45px;
   border-radius: 12px;
   margin: 5% 3%;
-}
-.mainButton:focus {
-  background-color: white;
-  color: #6379f4;
-  border: 2px solid #6379f4;
 }
 
 .notification {
@@ -169,6 +168,29 @@ a {
   margin-right: 20px;
 }
 
+/* ............ Transfer ........... */
+
+.profileTransfer {
+  flex: 1;
+}
+.noteForTransfer {
+  justify-content: center;
+  align-items: center;
+}
+.imageTransfer {
+  margin-right: 10px;
+}
+.noteTransfer {
+  /* flex: 7; */
+  width: 100px;
+}
+
+/* ........... Profile ............... */
+
+.profileButton {
+  width: 50%;
+}
+
 @media (max-width: 1000px) {
   .authLayer {
     display: none;
@@ -211,6 +233,14 @@ a {
     justify-content: space-between;
     margin-top: 20px;
   }
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .profileButton {
+    width: 60%;
+  }
 }
 
 @media (max-width: 500px) {
@@ -219,6 +249,16 @@ a {
   }
   .balanceDashboard {
     font-size: 30px;
+  }
+  .buttonPosition {
+    justify-content: center;
+    align-items: center;
+  }
+  .noteTransfer {
+    padding-right: 15px;
+  }
+  .profileButton {
+    width: 80%;
   }
 }
 

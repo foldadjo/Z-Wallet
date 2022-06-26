@@ -64,28 +64,25 @@ function confirmation() {
           </div>
           <br />
           <div className="d-flex justify-content-between px-4 pt-3 content-card">
-            <div className="row " style={{ height: "50px", width: "420px" }}>
-              <div className="col-1">
+            <div className="d-flex" style={{ height: "50px", width: "420px" }}>
+              <div>
                 <div style={{ height: "50px", width: "40px" }}>
-                  {transferImage === "null" ? (
-                    <Image
-                      src={"/profile default.png"}
-                      width={"50px"}
-                      height={"45px"}
-                      style={{ borderRadius: "15px" }}
-                    />
-                  ) : (
+                  <>
                     <img
-                      src={process.env.URL_CLOUDINARY + transferImage}
+                      src={
+                        transferImage === undefined || transferImage === "null"
+                          ? "/profile default.png"
+                          : process.env.URL_CLOUDINARY + transferImage
+                      }
                       width={"50px"}
                       height={"45px"}
                       style={{ borderRadius: "15px" }}
                     />
-                  )}
+                  </>
                 </div>
               </div>
               <div
-                className="col-8"
+                className="profileTransfer"
                 style={{
                   height: "50px",
                   width: "220px",

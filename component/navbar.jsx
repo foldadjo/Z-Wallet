@@ -52,21 +52,16 @@ export default function Navbar(props) {
       <div className="d-flex userDashboard">
         <div className="d-flex mx-3" style={{ widht: "120px" }}>
           <div className="m-1 mx-2 pointer" onClick={handleProfile}>
-            {data.image === "null" ? (
-              <Image
-                src={"/profile default.png"}
-                width={"50px"}
-                height={"45px"}
-                style={{ borderRadius: "15px" }}
-              />
-            ) : (
-              <img
-                src={process.env.URL_CLOUDINARY + data.image}
-                width={"50px"}
-                height={"45px"}
-                style={{ borderRadius: "15px" }}
-              />
-            )}
+            <img
+              src={
+                data.image === undefined || data.image === "null"
+                  ? "/profile default.png"
+                  : process.env.URL_CLOUDINARY + data.image
+              }
+              width={"50px"}
+              height={"45px"}
+              style={{ borderRadius: "15px" }}
+            />
           </div>
           <div className="m-1">
             <strong>{data.name ? data.name : ""}</strong>

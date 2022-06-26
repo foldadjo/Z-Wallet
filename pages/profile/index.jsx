@@ -21,7 +21,6 @@ function profile() {
   const [imageForm, setImageForm] = useState({ image: null });
   const [uiImage, setUiImage] = useState(null);
 
-  // const [Imagedata, setImagedata] = useState(null);
   const [data, setData] = useState({});
   const [form, setForm] = useState({
     image: "",
@@ -199,11 +198,11 @@ function profile() {
                       </h5>
                       <button
                         type="button"
-                        className="close"
+                        className="btn btn-danger"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                       >
-                        <span aria-hidden="true">&times;</span>
+                        X
                       </button>
                     </div>
                     <div className="modal-body">Edit your profile hire..</div>
@@ -285,7 +284,7 @@ function profile() {
             onClick={() => gotoProfile()}
             className="d-flex justify-content-center pointer"
           >
-            <div className="w-50 d-flex content-card justify-content-between px-4 pt-1 mt-4">
+            <div className="profileButton d-flex content-card justify-content-between px-4 pt-1 mt-4">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
                 <b> Personal Information </b>
               </div>
@@ -298,7 +297,7 @@ function profile() {
             onClick={() => gotoChangepass()}
             className="d-flex justify-content-center pointer"
           >
-            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4">
+            <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
                 <b> Change Password </b>
               </div>
@@ -311,7 +310,7 @@ function profile() {
             onClick={() => gotoChangepin()}
             className="d-flex justify-content-center"
           >
-            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4 pointer">
+            <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4 pointer">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
                 <b> Change PIN </b>
               </div>
@@ -324,7 +323,7 @@ function profile() {
             onClick={() => handleLogout()}
             className="d-flex justify-content-center"
           >
-            <div className="d-flex w-50 content-card justify-content-between px-4 pt-1 mt-4 pointer">
+            <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4 pointer">
               <div className="text-dark my-2" style={{ fontSize: "12px" }}>
                 <b> Logout </b>
               </div>

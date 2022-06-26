@@ -137,7 +137,7 @@ function tooltip(props) {
       <div>
         <a
           onClick={handleLogout}
-          href="/login"
+          href="/"
           className={`${
             props.tooltip === "logout" ? "text-primary" : "text-secondary"
           } mt-4 mb-2 mx-3 gb font-weight-bold`}
