@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
 import axios from "../../../utils/axios";
@@ -19,16 +19,29 @@ const button = {
 
 function status() {
   const router = useRouter();
-  const transferName = Cookies.get("transferName");
-  const transferImage = Cookies.get("transferImage");
-  const transferNoTelp = Cookies.get("transferNoTelp");
-  const dateTransfer = Cookies.get("dateTransfer");
-  const balance = Cookies.get("balance");
-  const statusTf = Cookies.get("statusTf");
-  const dataTransfer = Cookies.get("dataTransfer")
-    ? JSON.parse(Cookies.get("dataTransfer"))
-    : { amount: "", notes: "", receiverId: router.query.id };
+  const [transferName, setTransferName] = useState();
+  const [transferImage, setTransferImage] = useState();
+  const [transferNoTelp, setTransferNoTelp] = useState();
+  const [dateTransfer, setDateTransfer] = useState();
+  const [balance, setBalance] = useState();
+  const [statusTf, setStatusTf] = useState();
+  const [dataTransfer, setDataTransfer] = useState({
+    amount: "",
+    notes: "",
+    receiverId: router.query.id,
+  });
+
   const transferId = router.query.bookingId;
+
+  useEffect(() => {
+    setTransferName(Cookies.get("transferName"));
+    setTransferImage(Cookies.get("transferImage"));
+    setTransferNoTelp(Cookies.get("transferNoTelp"));
+    setBalance(Cookies.get("balance"));
+    setDateTransfer(Cookies.get("dateTransfer"));
+    setStatusTf(Cookies.get("statusTf"));
+    setDataTransfer(JSON.parse(Cookies.get("dataTransfer")));
+  }, []);
 
   const handlePDF = async () => {
     try {

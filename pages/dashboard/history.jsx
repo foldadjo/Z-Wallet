@@ -19,10 +19,12 @@ const button = {
   cursor: "pointer,",
 };
 
-function history() {
+function History() {
   const [filter, setFilter] = useState("");
   const [history, setHistory] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(5);
+
   // console.log(history.map((item) => item.id));
 
   const handleChangeFilter = (e) => {
@@ -37,9 +39,10 @@ function history() {
   const getUserdata = async () => {
     try {
       const History = await axios.get(
-        `/transaction/history?page=${page}&limit=10&filter=${filter}`
+        `/transaction/history?page=${page}&limit=5&filter=${filter}`
       );
       setHistory(History.data.data);
+      setTotalPage(result.data.pagination.totalPage);
       console.log(History);
     } catch (error) {
       console.log(error);
@@ -121,10 +124,58 @@ function history() {
               <br />
             </div>
           ))}
+          <div className="row justify-content-center mt-4">
+            <div className="col-2" style={{ textAlign: "center" }}>
+              <div>
+                <button
+                  className="btn btn-primary rounded-circle pt-2 ps-2 pe-2 pb-1 shadow translate-middle-y"
+                  style={
+                    page === 1 ? { display: "none" } : { display: "inline" }
+                  }
+                  type="button"
+                  onClick={() => setPage(page - 1)}
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+              </div>
+            </div>
+            <div
+              className="col-3"
+              style={{ textAlign: "center", alignItems: "center" }}
+            >
+              <button className="btn btn-primary rounded-1 pt-2 ps-2 pe-2 pb-1 shadow translate-middle-y">
+                {page}
+              </button>
+            </div>
+            <div className="col-2" style={{ textAlign: "center" }}>
+              <div>
+                <button
+                  className="btn btn-primary rounded-circle pt-2 ps-2 pe-2 pb-1 shadow translate-middle-y"
+                  type="button"
+                  style={
+                    page === totalPage
+                      ? { display: "none" }
+                      : { display: "inline" }
+                  }
+                  onClick={() => setPage(page + 1)}
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
   );
 }
 
-export default history;
+export default History;

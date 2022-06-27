@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
 import axios from "../../../utils/axios";
@@ -11,16 +11,31 @@ const board = {
   padding: "5px",
 };
 
-function confirmation() {
+const myLoader = ({ src, width, quality }) => {
+  return `${process.env.URL_CLOUDINARY + src}`;
+};
+
+function Confirmation() {
   const router = useRouter();
-  const transferName = Cookies.get("transferName");
-  const transferImage = Cookies.get("transferImage");
-  const transferNoTelp = Cookies.get("transferNoTelp");
-  const dateTransfer = Cookies.get("dateTransfer");
-  const balance = Cookies.get("balance");
-  const dataTransfer = Cookies.get("dataTransfer")
-    ? JSON.parse(Cookies.get("dataTransfer"))
-    : { amount: "", notes: "", receiverId: router.query.id };
+  const [transferName, setTransferName] = useState();
+  const [transferImage, setTransferImage] = useState();
+  const [transferNoTelp, setTransferNoTelp] = useState();
+  const [dateTransfer, setDateTransfer] = useState();
+  const [balance, setBalance] = useState();
+  const [dataTransfer, setDataTransfer] = useState({
+    amount: "",
+    notes: "",
+    receiverId: router.query.id,
+  });
+
+  useEffect(() => {
+    setTransferName(Cookies.get("transferName"));
+    setTransferImage(Cookies.get("transferImage"));
+    setTransferNoTelp(Cookies.get("transferNoTelp"));
+    setBalance(Cookies.get("balance"));
+    setDateTransfer(Cookies.get("dateTransfer"));
+    setDataTransfer(JSON.parse(Cookies.get("dataTransfer")));
+  }, []);
 
   const [form, setForm] = useState({
     pin: "",
@@ -67,18 +82,22 @@ function confirmation() {
             <div className="d-flex" style={{ height: "50px", width: "420px" }}>
               <div>
                 <div style={{ height: "50px", width: "40px" }}>
-                  <>
-                    <img
-                      src={
-                        transferImage === undefined || transferImage === "null"
-                          ? "/profile default.png"
-                          : process.env.URL_CLOUDINARY + transferImage
-                      }
+                  {transferImage === "null" || transferImage === undefined ? (
+                    <Image
+                      src={"/profile default.png"}
                       width={"50px"}
                       height={"45px"}
                       style={{ borderRadius: "15px" }}
                     />
-                  </>
+                  ) : (
+                    <Image
+                      loader={myLoader}
+                      src={transferImage}
+                      width={"50px"}
+                      height={"45px"}
+                      style={{ borderRadius: "15px" }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -211,4 +230,4 @@ function confirmation() {
   );
 }
 
-export default confirmation;
+export default Confirmation;

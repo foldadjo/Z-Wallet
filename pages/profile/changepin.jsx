@@ -9,7 +9,7 @@ const board = {
   padding: "5px",
 };
 
-function changePin() {
+function ChangePin() {
   const router = useRouter();
   const [form, setForm] = useState({
     pin: "",
@@ -74,4 +74,4 @@ function changePin() {
   );
 }
 
-export default changePin;
+export default ChangePin;

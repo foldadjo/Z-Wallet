@@ -30,14 +30,21 @@ const button = {
   cursor: "pointer,",
 };
 
-function transfer() {
+const myLoader = ({ src, width, quality }) => {
+  return `${process.env.URL_CLOUDINARY + src}`;
+};
+
+function Transfer() {
   const router = useRouter();
   const [userdata, setUserdata] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("firstName ASC");
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(5);
 
   const handleFilter = (e) => {
     e.key === "Enter" ? setSearch(e.target.value) : null;
+    e.key === "Enter" ? setPage(1) : null;
     getUserdata();
   };
 
@@ -50,14 +57,15 @@ function transfer() {
 
   useEffect(() => {
     getUserdata();
-  }, [search, filter]);
+  }, [search, filter, page]);
 
   const getUserdata = async () => {
     try {
       const result = await axios.get(
-        `/user?page=1&limit=10&search=${search}&sort=${filter}`
+        `/user?page=${page}&limit=5&search=${search}&sort=${filter}`
       );
       setUserdata(result.data.data);
+      setTotalPage(result.data.pagination.totalPage);
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -73,100 +81,150 @@ function transfer() {
 
   return (
     <Layout title="Transfer" menu="transfer">
-      <div>
-        <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
-          <div style={{ fontSize: "15px" }}>
-            <div>
-              <b>Search Receiver</b>
-            </div>
+      <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
+        <div style={{ fontSize: "15px" }}>
+          <div>
+            <b>Search Receiver</b>
           </div>
-          <br />
-          <div className="d-flex justify-content-between">
-            <div className="w-75">
-              <input
-                className="text-secondary bg-light"
-                style={input}
-                type="text"
-                placeholder="Search receiver here"
-                onKeyPress={(e) => handleFilter(e)}
-              />
-            </div>
-            <div>
-              <select
-                name="sort"
-                className="sometimes__button2"
-                style={button}
-                onClick={handleChangeFilter}
-              >
-                <option value="">--Select Filter--</option>
-                <option value="firstName ASC">A to Z</option>
-                <option value="firstName DESC">Z to A</option>
-              </select>
-            </div>
+        </div>
+        <br />
+        <div className="d-flex justify-content-between">
+          <div className="w-75">
+            <input
+              className="text-secondary bg-light"
+              style={input}
+              type="text"
+              placeholder="Search receiver here"
+              onKeyPress={(e) => handleFilter(e)}
+            />
           </div>
-          <br />
-          <br />
-          {userdata.map((item) => (
-            <div
-              key={item.id}
-              onClick={() =>
-                handleTransfer(
-                  item.id,
-                  item.firstName,
-                  item.lastName,
-                  item.image,
-                  item.noTelp
-                )
-              }
+          <div>
+            <select
+              name="sort"
+              className="sometimes__button2"
+              style={button}
+              onClick={handleChangeFilter}
             >
-              <div className="d-flex justify-content-between px-4 pt-3 content-card">
-                <div
-                  className="d-flex"
-                  style={{ height: "50px", width: "420px" }}
-                >
-                  <div>
-                    <div style={{ height: "50px", width: "40px" }}>
+              <option value="">--Select Filter--</option>
+              <option value="firstName ASC">A to Z</option>
+              <option value="firstName DESC">Z to A</option>
+            </select>
+          </div>
+        </div>
+        <br />
+        <br />
+        {userdata.map((item) => (
+          <div
+            key={item.id}
+            onClick={() =>
+              handleTransfer(
+                item.id,
+                item.firstName,
+                item.lastName,
+                item.image,
+                item.noTelp
+              )
+            }
+          >
+            <div className="d-flex justify-content-between px-4 pt-3 content-card">
+              <div
+                className="d-flex"
+                style={{ height: "50px", width: "420px" }}
+              >
+                <div>
+                  <div style={{ height: "50px", width: "40px" }}>
+                    {item.image === null || item.image === undefined ? (
                       <Image
-                        src={
-                          item.image === null || item.image === undefined
-                            ? "/profile default.png"
-                            : process.env.URL_CLOUDINARY + item.image
-                        }
+                        src={"/profile default.png"}
                         width={"50px"}
                         height={"45px"}
                         style={{ borderRadius: "15px" }}
                       />
-                    </div>
+                    ) : (
+                      <Image
+                        loader={myLoader}
+                        src={item.image}
+                        width={"50px"}
+                        height={"45px"}
+                        style={{ borderRadius: "15px" }}
+                      />
+                    )}
+                  </div>
+                </div>
+                <div
+                  className="profileTransfer"
+                  style={{
+                    height: "50px",
+                    width: "220px",
+                    padding: "0 0 0 45px",
+                  }}
+                >
+                  <div style={{ fontSize: "12px" }}>
+                    <b>{item.firstName + " " + item.lastName}</b>
                   </div>
                   <div
-                    className="profileTransfer"
-                    style={{
-                      height: "50px",
-                      width: "220px",
-                      padding: "0 0 0 45px",
-                    }}
+                    className="text-secondary my-2"
+                    style={{ fontSize: "8px" }}
                   >
-                    <div style={{ fontSize: "12px" }}>
-                      <b>{item.firstName + " " + item.lastName}</b>
-                    </div>
-                    <div
-                      className="text-secondary my-2"
-                      style={{ fontSize: "8px" }}
-                    >
-                      {item.noTelp === null
-                        ? "phone number not add"
-                        : "+" + item.noTelp}
-                    </div>
+                    {item.noTelp === null
+                      ? "phone number not add"
+                      : "+" + item.noTelp}
                   </div>
                 </div>
               </div>
-              <br />
             </div>
-          ))}
+            <br />
+          </div>
+        ))}
+        <div className="row justify-content-center mt-4">
+          <div className="col-2" style={{ textAlign: "center" }}>
+            <div>
+              <button
+                className="btn btn-primary rounded-circle pt-2 ps-2 pe-2 pb-1 shadow translate-middle-y"
+                style={page === 1 ? { display: "none" } : { display: "inline" }}
+                type="button"
+                onClick={() => setPage(page - 1)}
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+            </div>
+          </div>
+          <div
+            className="col-3"
+            style={{ textAlign: "center", alignItems: "center" }}
+          >
+            <button className="btn btn-primary rounded-1 pt-2 ps-2 pe-2 pb-1 shadow translate-middle-y">
+              {page}
+            </button>
+          </div>
+          <div className="col-2" style={{ textAlign: "center" }}>
+            <div>
+              <button
+                className="btn btn-primary rounded-circle pt-2 ps-2 pe-2 pb-1 shadow translate-middle-y"
+                type="button"
+                style={
+                  page === totalPage
+                    ? { display: "none" }
+                    : { display: "inline" }
+                }
+                onClick={() => setPage(page + 1)}
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
   );
 }
 
-export default transfer;
+export default Transfer;

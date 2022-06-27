@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 import Head from "next/head";
 import Navbar from "../component/navLandingPage";
 import Image from "next/image";
@@ -11,6 +13,38 @@ import {
 
 function LandingPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    cekToken();
+  }, []);
+  const cekToken = () => {
+    const token = Cookies.get("token");
+    console.log(token);
+    if (token) {
+      const decoded = jwt_decode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        Cookies.remove("id");
+        Cookies.remove("token");
+        Cookies.remove("noTelp");
+        Cookies.remove("image");
+        Cookies.remove("balance");
+        Cookies.remove("name");
+        Cookies.remove("dataTransfer");
+        Cookies.remove("statusTf");
+        Cookies.remove("dateTransfer");
+        Cookies.remove("transferImage");
+        Cookies.remove("transferNoTelp");
+        Cookies.remove("transferName");
+        Cookies.remove("history");
+        alert("relogin please");
+      } else {
+        router.push("/dashboard");
+      }
+    } else {
+      console.log("login first");
+    }
+  };
+
   const handleLogin = () => {
     router.push("/login");
   };
@@ -296,10 +330,10 @@ function LandingPage() {
         <hr />
         <div className="d-flex footer">
           <div className="flexFooter1">
-            <p>2020 FazzPay. All right reserved.</p>
+            <p>2022 Zwallet. All right reserved.</p>
           </div>
           <div className="flexFooter2">
-            <p>+62 5637 8882 9901</p>
+            <p>+62 8515 5405 031</p>
           </div>
           <div className="flexFooter2">
             <p>contact@fazzpay.com</p>

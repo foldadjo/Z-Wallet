@@ -1,11 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../navbar";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Footer from "../footer";
 import Tooltip from "../tooltip";
 import NextNProgress from "nextjs-progressbar";
+import axios from "../../utils/axios";
+import jwt_decode from "jwt-decode";
 
 export default function MainLayout(props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    cekToken();
+  }, []);
+  const cekToken = () => {
+    const token = Cookies.get("token");
+    console.log(token);
+    if (token) {
+      const decoded = jwt_decode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        Cookies.remove("id");
+        Cookies.remove("token");
+        Cookies.remove("noTelp");
+        Cookies.remove("image");
+        Cookies.remove("balance");
+        Cookies.remove("name");
+        Cookies.remove("dataTransfer");
+        Cookies.remove("statusTf");
+        Cookies.remove("dateTransfer");
+        Cookies.remove("transferImage");
+        Cookies.remove("transferNoTelp");
+        Cookies.remove("transferName");
+        Cookies.remove("history");
+        router.push("/");
+      } else {
+        console.log("already login");
+      }
+    } else {
+      router.push("/login");
+    }
+  };
+
   const [form, setForm] = useState({
     amount: "",
   });
@@ -40,7 +77,7 @@ export default function MainLayout(props) {
         <div className="d-flex justify-content-md-center">
           <div className="cardDashboard">
             <div className="row justify-content-md-center mx-4">
-              <div className="tooltipMain m6 mx-2">
+              <div className="tooltipMain m6 mx-2 pb-4">
                 <Tooltip tooltip={props.menu} />
               </div>
               <div className="childern m6">

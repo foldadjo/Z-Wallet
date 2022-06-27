@@ -5,9 +5,11 @@ import axios from "../../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-// import { InferGetServerSidePropsType } from 'next'
+import { resetPasswordRedux } from "../../../store/action/auth";
+import { useDispatch } from "react-redux";
 
-export default function confirmPass() {
+export default function ConfirmPass() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [passHide1, setPassHide1] = useState(true);
   const [passHide2, setPassHide2] = useState(true);
@@ -38,12 +40,10 @@ export default function confirmPass() {
       } else if (data.newPassword !== data.confirmPassword) {
         alert("password not match");
       } else {
-        const result = await axios.patch("/auth/reset-password", data);
+        const result = await dispatch(resetPasswordRedux(data));
         console.log(result);
-        Cookies.set("token", result.data.data.token);
-        Cookies.set("id", result.data.data.id);
         router.push("/login");
-        alert(result.data.msg);
+        alert(result.value.data.msg);
       }
     } catch (error) {
       alert(error.response.data.msg);

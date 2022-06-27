@@ -22,30 +22,32 @@ export default function NavbarLandingPage(props) {
   };
 
   return (
-    <div
-      className="d-flex justify-content-beetween bg-white pt-4 px-4"
-      style={navbar}
-    >
-      <div style={style.logo}>
-        <Image src="/Zwallet-blue.png" width={"85px"} height={"20px"} />
+    <>
+      <div
+        className="d-flex justify-content-beetween bg-white pt-4 px-4"
+        style={navbar}
+      >
+        <div style={style.logo}>
+          <Image src="/Zwallet-blue.png" width={"85px"} height={"20px"} />
+        </div>
+        <div style={style.buttonSide}>
+          <button
+            className="btn btn-outline-primary me-1"
+            style={style.button}
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+          <button
+            className="btn btn-outline-primary"
+            style={style.button}
+            onClick={handleRegister}
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
-      <div style={style.buttonSide}>
-        <button
-          className="btn btn-outline-primary me-1"
-          style={style.button}
-          onClick={handleLogin}
-        >
-          Login
-        </button>
-        <button
-          className="btn btn-outline-primary"
-          style={style.button}
-          onClick={handleRegister}
-        >
-          Sign Up
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 

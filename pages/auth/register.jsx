@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
-import axios from "../../utils/axios";
+import { registerRedux } from "../../store/action/auth";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 
-export default function register() {
+export default function Register() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [passHide, setPassHide] = useState(true);
   const [form, setForm] = useState({
@@ -19,7 +21,7 @@ export default function register() {
   };
   const handleSubmit = async () => {
     try {
-      if (form.firstName === "" || form.email || form.password) {
+      if (form.firstName === "" || form.email === "" || form.password === "") {
         alert("form is require");
       } else if (form.password.length < 8) {
         alert("Your password must be at least 8 characters");
@@ -28,14 +30,14 @@ export default function register() {
       } else if (form.password.search(/[0-9]/) < 0) {
         alert("Your password must contain at least one digit number.");
       } else {
-        const result = await axios.post("/auth/register", form);
-        console.log(result);
+        const result = await dispatch(registerRedux(form));
+        console.log(result.value);
         router.push("/");
         alert("succes register");
       }
     } catch (error) {
       console.log(error);
-      alert(error.response.data.msg);
+      alert(error.response.value.msg);
     }
   };
 
@@ -125,7 +127,7 @@ export default function register() {
             {passHide === true ? <BsEye size={20} /> : <BsEyeSlash size={20} />}
           </div>
           <hr className="col-10" />
-          <dev className="col-7"></dev>
+          <div className="col-7"></div>
         </div>
         <button className="authButton" onClick={handleSubmit}>
           {" "}

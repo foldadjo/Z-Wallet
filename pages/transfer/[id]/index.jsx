@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
 import axios from "../../../utils/axios";
@@ -21,12 +21,25 @@ const input = {
   textAlign: "center",
 };
 
-function transferId() {
+const myLoader = ({ src, width, quality }) => {
+  return `${process.env.URL_CLOUDINARY + src}`;
+};
+
+function TransferId() {
   const router = useRouter();
-  const transferName = Cookies.get("transferName");
-  const transferImage = Cookies.get("transferImage");
-  const transferNoTelp = Cookies.get("transferNoTelp");
-  const balance = Cookies.get("balance");
+  const [transferName, setTransferName] = useState();
+  const [transferImage, setTransferImage] = useState();
+  const [transferNoTelp, setTransferNoTelp] = useState();
+  const [balance, setBalance] = useState();
+
+  // `setCookie` and `deleteCookie` code here
+
+  useEffect(() => {
+    setTransferName(Cookies.get("transferName"));
+    setTransferImage(Cookies.get("transferImage"));
+    setTransferNoTelp(Cookies.get("transferNoTelp"));
+    setBalance(Cookies.get("balance"));
+  }, []);
 
   const [form, setForm] = useState({
     receiverId: "",
@@ -68,18 +81,22 @@ function transferId() {
             <div className="d-flex" style={{ height: "50px", width: "420px" }}>
               <div>
                 <div style={{ height: "50px", width: "40px" }}>
-                  <>
-                    <img
-                      src={
-                        transferImage === undefined || transferImage === "null"
-                          ? "/profile default.png"
-                          : process.env.URL_CLOUDINARY + transferImage
-                      }
+                  {transferImage === "null" || transferImage === undefined ? (
+                    <Image
+                      src={"/profile default.png"}
                       width={"50px"}
                       height={"45px"}
                       style={{ borderRadius: "15px" }}
                     />
-                  </>
+                  ) : (
+                    <Image
+                      loader={myLoader}
+                      src={transferImage}
+                      width={"50px"}
+                      height={"45px"}
+                      style={{ borderRadius: "15px" }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -157,4 +174,4 @@ function transferId() {
   );
 }
 
-export default transferId;
+export default TransferId;

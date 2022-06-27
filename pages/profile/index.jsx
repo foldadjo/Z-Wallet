@@ -146,192 +146,188 @@ function profile() {
 
   return (
     <Layout title="Profile" menu="profile">
-      <div>
-        <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
-          <div className="d-flex justify-content-center">
-            {data.image === "null" ? (
-              <Image
-                src={"/profile default.png"}
-                width={"50px"}
-                height={"45px"}
-                style={{ borderRadius: "15px" }}
-              />
-            ) : (
-              <img
-                src={process.env.URL_CLOUDINARY + data.image}
-                width={"50px"}
-                height={"45px"}
-                style={{ borderRadius: "15px" }}
-              />
-            )}
-          </div>
-          <div className="d-flex justify-content-center py-2">
-            <div className="custom-file">
-              <button
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal3"
-                type="button"
-                className="bg-white border border-white"
-                // style={{ display: "none" }}
+      <div className="bg-white text-dark p-4 pb-1 mb-5" style={board}>
+        <div className="d-flex justify-content-center">
+          {data.image === "null" || data.image === undefined ? (
+            <Image
+              src={"/profile default.png"}
+              width={"50px"}
+              height={"45px"}
+              style={{ borderRadius: "15px" }}
+            />
+          ) : (
+            <img
+              src={process.env.URL_CLOUDINARY + data.image}
+              width={"50px"}
+              height={"45px"}
+              style={{ borderRadius: "15px" }}
+            />
+          )}
+        </div>
+        <div className="d-flex justify-content-center py-2">
+          <div className="custom-file">
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal3"
+              type="button"
+              className="bg-white border border-white"
+              // style={{ display: "none" }}
+            >
+              <label
+                className="custom-file-label pointer"
+                htmlFor="inputGroupFile02"
               >
-                <label
-                  className="custom-file-label pointer"
-                  htmlFor="inputGroupFile02"
-                >
-                  <Image src="/icon pen.png" width={"10px"} height={"12px"} />
-                  &ensp; edit
-                </label>
-              </button>
-              <div
-                className="modal fade"
-                id="exampleModal3"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLabel">
-                        Edit your profile
-                      </h5>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        X
-                      </button>
+                <Image src="/icon pen.png" width={"10px"} height={"12px"} />
+                &ensp; edit
+              </label>
+            </button>
+            <div
+              className="modal fade"
+              id="exampleModal3"
+              tabIndex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">
+                      Edit your profile
+                    </h5>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      X
+                    </button>
+                  </div>
+                  <div className="modal-body">Edit your profile hire..</div>
+                  <br />
+                  <div className="form-group">
+                    <div className="form-group d-flex justify-content-center">
+                      <input
+                        type="text"
+                        className="form-control w-25"
+                        placeholder="First Name"
+                        name="firstName"
+                        onChange={handleChangeText}
+                      />
+                      <br />
+                      <input
+                        type="text"
+                        className="form-control w-25"
+                        placeholder="Last Name"
+                        name="lastName"
+                        onChange={handleChangeText}
+                      />
                     </div>
-                    <div className="modal-body">Edit your profile hire..</div>
-                    <br />
-                    <div className="form-group">
-                      <div className="form-group d-flex justify-content-center">
-                        <input
-                          type="text"
-                          className="form-control w-25"
-                          placeholder="First Name"
-                          name="firstName"
-                          onChange={handleChangeText}
-                        />
-                        <br />
-                        <input
-                          type="text"
-                          className="form-control w-25"
-                          placeholder="Last Name"
-                          name="lastName"
-                          onChange={handleChangeText}
-                        />
-                      </div>
-                      <div className="form-group d-flex justify-content-center">
-                        <input
-                          className="form-control form-control-sm w-50 mt-3"
-                          id="formFileSm"
-                          type="file"
-                          name="image"
-                          onChange={(event) => handleChangeText(event)}
-                        />
-                      </div>
+                    <div className="form-group d-flex justify-content-center">
+                      <input
+                        className="form-control form-control-sm w-50 mt-3"
+                        id="formFileSm"
+                        type="file"
+                        name="image"
+                        onChange={(event) => handleChangeText(event)}
+                      />
                     </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        data-bs-dismiss="modal"
-                        onClick={() => handleDeleteImage()}
-                      >
-                        delete image
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-bs-dismiss="modal"
-                        onClick={handleChangename}
-                      >
-                        Update Name
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-bs-dismiss="modal"
-                        onClick={handleUpdateImage}
-                      >
-                        Update image
-                      </button>
-                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      data-bs-dismiss="modal"
+                      onClick={() => handleDeleteImage()}
+                    >
+                      delete image
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      onClick={handleChangename}
+                    >
+                      Update Name
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      onClick={handleUpdateImage}
+                    >
+                      Update image
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            className="d-flex justify-content-center mt-3"
-            style={{ fontSize: "15px" }}
-          >
-            <b>{data.name ? data.name : ""}</b>
-          </div>
-          <div
-            className="d-flex text-center justify-content-center mt-2 mb-4"
-            style={{ fontSize: "15px" }}
-          >
-            {data.noTelp === "null"
-              ? "phone number not add"
-              : "+" + data.noTelp}
-          </div>
-          <div
-            onClick={() => gotoProfile()}
-            className="d-flex justify-content-center pointer"
-          >
-            <div className="profileButton d-flex content-card justify-content-between px-4 pt-1 mt-4">
-              <div className="text-dark my-2" style={{ fontSize: "12px" }}>
-                <b> Personal Information </b>
-              </div>
-              <div className="mt-1">
-                <Image src="/arrow-left.png" width={"30px"} height={"25px"} />
-              </div>
-            </div>
-          </div>
-          <div
-            onClick={() => gotoChangepass()}
-            className="d-flex justify-content-center pointer"
-          >
-            <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4">
-              <div className="text-dark my-2" style={{ fontSize: "12px" }}>
-                <b> Change Password </b>
-              </div>
-              <div className="mt-1">
-                <Image src="/arrow-left.png" width={"30px"} height={"25px"} />
-              </div>
-            </div>
-          </div>
-          <div
-            onClick={() => gotoChangepin()}
-            className="d-flex justify-content-center"
-          >
-            <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4 pointer">
-              <div className="text-dark my-2" style={{ fontSize: "12px" }}>
-                <b> Change PIN </b>
-              </div>
-              <div className="mt-1">
-                <Image src="/arrow-left.png" width={"30px"} height={"25px"} />
-              </div>
-            </div>
-          </div>
-          <div
-            onClick={() => handleLogout()}
-            className="d-flex justify-content-center"
-          >
-            <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4 pointer">
-              <div className="text-dark my-2" style={{ fontSize: "12px" }}>
-                <b> Logout </b>
-              </div>
-            </div>
-          </div>
-          <br />
-          <br />
         </div>
+        <div
+          className="d-flex justify-content-center mt-3"
+          style={{ fontSize: "15px" }}
+        >
+          <b>{data.name ? data.name : ""}</b>
+        </div>
+        <div
+          className="d-flex text-center justify-content-center mt-2 mb-4"
+          style={{ fontSize: "15px" }}
+        >
+          {data.noTelp === "null" ? "phone number not add" : "+" + data.noTelp}
+        </div>
+        <div
+          onClick={() => gotoProfile()}
+          className="d-flex justify-content-center pointer"
+        >
+          <div className="profileButton d-flex content-card justify-content-between px-4 pt-1 mt-4">
+            <div className="text-dark my-2" style={{ fontSize: "12px" }}>
+              <b> Personal Information </b>
+            </div>
+            <div className="mt-1">
+              <Image src="/arrow-left.png" width={"30px"} height={"25px"} />
+            </div>
+          </div>
+        </div>
+        <div
+          onClick={() => gotoChangepass()}
+          className="d-flex justify-content-center pointer"
+        >
+          <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4">
+            <div className="text-dark my-2" style={{ fontSize: "12px" }}>
+              <b> Change Password </b>
+            </div>
+            <div className="mt-1">
+              <Image src="/arrow-left.png" width={"30px"} height={"25px"} />
+            </div>
+          </div>
+        </div>
+        <div
+          onClick={() => gotoChangepin()}
+          className="d-flex justify-content-center"
+        >
+          <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4 pointer">
+            <div className="text-dark my-2" style={{ fontSize: "12px" }}>
+              <b> Change PIN </b>
+            </div>
+            <div className="mt-1">
+              <Image src="/arrow-left.png" width={"30px"} height={"25px"} />
+            </div>
+          </div>
+        </div>
+        <div
+          onClick={() => handleLogout()}
+          className="d-flex justify-content-center"
+        >
+          <div className="d-flex profileButton content-card justify-content-between px-4 pt-1 mt-4 pointer">
+            <div className="text-dark my-2" style={{ fontSize: "12px" }}>
+              <b> Logout </b>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
       </div>
     </Layout>
   );

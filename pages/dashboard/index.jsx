@@ -6,6 +6,7 @@ import { Line } from "react-chartjs-2";
 import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { BsArrowUpShort, BsPlus } from "react-icons/bs";
 
 const board = {
   borderRadius: "20px",
@@ -24,7 +25,7 @@ const button = {
   cursor: "pointer,",
 };
 
-function dashboard() {
+function Dashboard() {
   const router = useRouter();
   const [userdata, setUserdata] = useState({});
   const [dashboard, setDashboard] = useState({});
@@ -34,10 +35,6 @@ function dashboard() {
   const [form, setForm] = useState({
     amount: "",
   });
-
-  const handleChangeText = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   useEffect(() => {
     getUserdata();
@@ -49,7 +46,7 @@ function dashboard() {
       const result = await axios.get(`/user/profile/${id}`);
       const dashboard = await axios.get(`/dashboard/${id}`);
       const history = await axios.get(
-        `/transaction/history?page=1&limit=5&filter=`
+        `/transaction/history?page=1&limit=6&filter=`
       );
       Cookies.set(
         "name",
@@ -87,7 +84,6 @@ function dashboard() {
         backgroundColor: "#1EC15F",
         borderColor: "#1EC15F",
         data: listIn,
-        // yAxisID: "y-axis-1",
       },
       {
         label: "# of Expense",
@@ -95,94 +91,31 @@ function dashboard() {
         backgroundColor: "#FF5B37",
         borderColor: "#FF5B37",
         data: listEx,
-        // yAxisID: "y-axis-2",
       },
     ],
-  };
-
-  const options = {
-    responsive: true,
-    scales: {
-      yAxis: [
-        {
-          type: "linear",
-          display: true,
-          position: "left",
-          id: "y-axis-1",
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-        {
-          type: "linear",
-          display: true,
-          position: "right",
-          id: "y-axis-2",
-          gridLines: {
-            drawOnArea: false,
-          },
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
   };
 
   const handleTransfer = () => {
     router.push("/transfer");
   };
 
-  const handleTopup = async () => {
-    try {
-      const topUp = await axios.post("/transaction/top-up", form);
-      console.log(topUp);
-      window.open(topUp.data.data.redirectUrl);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Layout title="Dashboard" menu="dashboard">
-      <div>
-        <div className="d-flex row p-3 bg-primary text-white" style={board}>
-          <div className="col-8 my-2">
-            <div className="text-light">Balance</div>
-            <div className="balanceDashboard">
-              <strong> Rp {userdata.balance} </strong>
-            </div>
-            <div className="text-light mt-2">
-              {userdata.noTelp === null
-                ? "phone number not added"
-                : userdata.noTelp}
-            </div>
+      <div className="d-flex row p-3 bg-primary text-white pb-4" style={board}>
+        <div className="col-8 my-2">
+          <div className="text-light">Balance</div>
+          <div className="balanceDashboard">
+            <strong> Rp {userdata.balance} </strong>
           </div>
-          <div className="buttonDashboard col-4">
-            <button onClick={handleTransfer} style={button}>
-              <Image
-                src="/icon transfer.png"
-                alt="icon"
-                width={20}
-                height={20}
-              />
-              &ensp; Transfer
-            </button>
-            <button
-              style={button}
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              type="button"
-            >
-              <Image src="/icon topup.png" alt="icon" width={20} height={20} />
-              &ensp; Top Up
-            </button>
+          <div className="text-light mt-2">
+            {userdata.noTelp === null
+              ? "phone number not added"
+              : userdata.noTelp}
           </div>
         </div>
-        <div className="buttonDashboardResponsive">
+        <div className="buttonDashboard col-4">
           <button onClick={handleTransfer} style={button}>
-            <Image src="/icon transfer.png" alt="icon" width={20} height={20} />
-            &ensp; Transfer
+            <BsArrowUpShort size={25} /> &ensp; Transfer
           </button>
           <button
             style={button}
@@ -190,38 +123,55 @@ function dashboard() {
             data-bs-target="#exampleModal"
             type="button"
           >
-            <Image src="/icon topup.png" alt="icon" width={20} height={20} />
+            <BsPlus size={25} />
             &ensp; Top Up
           </button>
         </div>
-        <div className="row d-flex justify-content-between my-4">
-          <div
-            className="graphDashboard p-4 bg-white text-dark buttonDashboard"
-            style={board}
-          >
-            <div className="row">
-              <div className="col-6">
-                <Image src={"/arrow-down.png"} width={"30px"} height={"30px"} />
-                <div className="text-secondary">Income</div>
-                <div>
-                  <b> {dashboard.totalIncome} </b>
-                </div>
-              </div>
-              <div className="col-1"></div>
-              <div className="col-5">
-                <Image src={"/arrow-up.png"} width={"30px"} height={"30px"} />
-                <div className="text-secondary">Expense</div>
-                <div>
-                  <b> {dashboard.totalExpense} </b>
-                </div>
+      </div>
+      <div className="buttonDashboardResponsive">
+        <button className="bg-primary" onClick={handleTransfer} style={button}>
+          <BsArrowUpShort size={25} />
+          &ensp; Transfer
+        </button>
+        <button
+          style={button}
+          className="bg-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          type="button"
+        >
+          <BsPlus size={25} /> &ensp; Top Up
+        </button>
+      </div>
+      <div className="row d-flex justify-content-between my-4">
+        <div
+          className="graphDashboard p-4 bg-white text-dark buttonDashboard"
+          style={board}
+        >
+          <div className="row">
+            <div className="col-6">
+              <Image src={"/arrow-down.png"} width={"30px"} height={"30px"} />
+              <div className="text-secondary">Income</div>
+              <div>
+                <b> {dashboard.totalIncome} </b>
               </div>
             </div>
-            <div className="m-2">
-              <Line data={data} options={options} />{" "}
+            <div className="col-1"></div>
+            <div className="col-5">
+              <Image src={"/arrow-up.png"} width={"30px"} height={"30px"} />
+              <div className="text-secondary">Expense</div>
+              <div>
+                <b> {dashboard.totalExpense} </b>
+              </div>
             </div>
           </div>
-          {/* <div className="col-1"></div> */}
-          <div className="historyDashboard bg-white text-dark" style={board}>
+          <div className="m-2">
+            <Line data={data} />{" "}
+          </div>
+        </div>
+        {/* <div className="col-1"></div> */}
+        <div className="historyDashboard bg-white text-dark" style={board}>
+          <div className="p-3 py-4">
             <div
               className="d-flex justify-content-between"
               style={{ fontSize: "12px" }}
@@ -293,4 +243,4 @@ function dashboard() {
   );
 }
 
-export default dashboard;
+export default Dashboard;

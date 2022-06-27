@@ -31,9 +31,20 @@ axiosApiIntances.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     if (error.response.status === 403) {
+      Cookies.remove("id");
+      Cookies.remove("token");
+      Cookies.remove("noTelp");
+      Cookies.remove("image");
+      Cookies.remove("balance");
+      Cookies.remove("name");
+      Cookies.remove("dataTransfer");
+      Cookies.remove("statusTf");
+      Cookies.remove("dateTransfer");
+      Cookies.remove("transferImage");
+      Cookies.remove("transferNoTelp");
+      Cookies.remove("transferName");
+      Cookies.remove("history");
       localStorage.clear();
-      Cookies.clear();
-      window.location.href = "/auth/login";
     }
     return Promise.reject(error);
   }

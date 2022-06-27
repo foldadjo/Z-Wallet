@@ -11,7 +11,7 @@ const board = {
   padding: "5px",
 };
 
-function changePass() {
+function ChangePass() {
   const router = useRouter();
   const id = Cookies.get("id");
   const [form, setForm] = useState({
@@ -124,4 +124,4 @@ function changePass() {
   );
 }
 
-export default changePass;
+export default ChangePass;

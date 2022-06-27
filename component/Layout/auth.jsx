@@ -1,9 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import jwt_decode from "jwt-decode";
 import Head from "next/head";
 import Image from "next/image";
 import NextNProgress from "nextjs-progressbar";
 
-export default function MainLayout(props) {
+export default function MainLayoutAuth(props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    cekToken();
+  }, []);
+  const cekToken = () => {
+    const token = Cookies.get("token");
+    console.log(token);
+    if (token) {
+      const decoded = jwt_decode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        Cookies.remove("id");
+        Cookies.remove("token");
+        Cookies.remove("noTelp");
+        Cookies.remove("image");
+        Cookies.remove("balance");
+        Cookies.remove("name");
+        Cookies.remove("dataTransfer");
+        Cookies.remove("statusTf");
+        Cookies.remove("dateTransfer");
+        Cookies.remove("transferImage");
+        Cookies.remove("transferNoTelp");
+        Cookies.remove("transferName");
+        Cookies.remove("history");
+        alert("relogin please");
+      } else {
+        router.push("/dashboard");
+      }
+    } else {
+      console.log("login first");
+    }
+  };
+
   return (
     <>
       <NextNProgress

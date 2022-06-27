@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
 import Image from "next/image";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
+import { loginRedux } from "../../store/action/auth";
+import { useDispatch } from "react-redux";
 
-export default function login() {
+export default function Login() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [passHide, setPassHide] = useState(true);
   const [form, setForm] = useState({
@@ -20,11 +22,11 @@ export default function login() {
 
   const handleSubmit = async () => {
     try {
-      const result = await axios.post("/auth/login", form);
-      console.log(result);
-      Cookies.set("token", result.data.data.token);
-      Cookies.set("id", result.data.data.id);
-      if (result.data.data.pin === null) {
+      const result = await dispatch(loginRedux(form));
+      console.log(result.value);
+      Cookies.set("token", result.value.data.data.token);
+      Cookies.set("id", result.value.data.data.id);
+      if (result.value.data.data.pin === null) {
         router.push("/auth/createpin");
       } else {
         router.push("/dashboard");
@@ -90,15 +92,15 @@ export default function login() {
             {passHide === true ? <BsEye size={20} /> : <BsEyeSlash size={20} />}
           </div>
           <hr className="col-10" />
-          <dev className="col-7"></dev>
-          <dev
+          <div className="col-7"></div>
+          <div
             className="col-4 text-dark"
             style={{ fontSize: "10px", cursor: "pointer" }}
           >
             <a href="auth/resetpass">
               <strong> Forgot password?</strong>
             </a>
-          </dev>
+          </div>
         </div>
         <button type="submit" className="authButton" onClick={handleSubmit}>
           Login

@@ -11,7 +11,7 @@ const board = {
   padding: "5px",
 };
 
-function profile() {
+function Profile() {
   const router = useRouter();
   const id = router.query.id;
   const [userdata, setUserdata] = useState({});
@@ -141,4 +141,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default Profile;
