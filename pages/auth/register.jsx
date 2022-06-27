@@ -133,7 +133,7 @@ export default function register() {
         </button>
         <div className="col-10 text-center">
           Already have an account? Let’s{" "}
-          <a href="/" style={{ cursor: "pointer" }}>
+          <a href="/login" style={{ cursor: "pointer" }}>
             Login
           </a>
         </div>
