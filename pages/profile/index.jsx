@@ -141,7 +141,7 @@ function profile() {
     Cookies.remove("history");
 
     localStorage.clear();
-    router.push("/login");
+    router.push("/");
   };
 
   return (
