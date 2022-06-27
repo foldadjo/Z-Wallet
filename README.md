@@ -1,48 +1,63 @@
-# FAZZPAY Web with NEXT.JS
+<h1 align='center'>Zwallet</h1>
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Link Varcel Deploy
+- [Click_Hire](https://pay-jauhar.vercel.app/)
+
+## About The Project
+
+Website Application Finance | Frontend Repository
+
+## Built With
+
+[![NodeJs](https://img.shields.io/badge/NodeJs-16.15.x-green)](https://github.com/react-bootstrap/react-bootstrap)
+[![Next](https://img.shields.io/badge/Next-v12.1.6-black)](https://nextjs.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-v4.6.x-purple)](https://github.com/react-bootstrap/react-bootstrap)
+
+## Requirements
+
+1. <a href="https://nodejs.org/en/download/">Node Js</a>
+2. Node_modules `npm install` or `yarn install`
+3. Backend API Zwallet [`here`](https://github.com/FazztrackWebClass/FazzPay-Backend)
 
 ## Getting Started
 
-First, run the development server:
+1. Download this Project or you can type `git clone https://github.com/thariqfarsha/itjobs-frontend.git`
+2. Open app's directory in CMD or Terminal
+3. Type `npm install` or `yarn install`
+4. Add .env in nextConfig.js
 
-```bash
-npm run dev
-# or
-yarn dev
+```sh
+URL_BACKEND: "https://fazzpay.herokuapp.com",
+URL_CLOUDINARY: "https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/",
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Type `npm run dev`
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## ⛏️ Built Using
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [axios](https://www.npmjs.com/package/axios)
+- [bootstrap](https://www.npmjs.com/package/bootstrap)
+- [next](https://www.npmjs.com/package/next)
+- [react](https://www.npmjs.com/package/react)
+- [react-bootstrap](https://www.npmjs.com/package/react-bootstrap)
+- [react-dom](https://www.npmjs.com/package/react-dom)
+- [react-icons](https://www.npmjs.com/package/react-icons)
+- [react-number-format](https://www.npmjs.com/package/react-number-format)
+- [react-redux](https://www.npmjs.com/package/react-redux)
+- [redux](https://www.npmjs.com/package/redux)
+- [redux-logger](https://www.npmjs.com/package/redux-logger)
+- [redux-promise-middleware](https://www.npmjs.com/package/redux-promise-middleware)
+- [redux-thunk](https://www.npmjs.com/package/redux-thunk)
+- [eslint](https://www.npmjs.com/package/eslint)
+- [js-cookie](https://www.npmjs.com/package/js-cookie)
+- [cookies](https://www.npmjs.com/package/cookies)
+- [react-paginate](https://www.npmjs.com/package/react-paginate)
 
 ## Documentation
-
-### Link Varcel
-- [varcel](https://pay-jauhar.vercel.app/)
-
-
 ### Login Page
-[Login Page](/public/Login.PNG)
+![Login Page](/public/Login.PNG)
 
 ### Dashboard
 ![Dashboard](/public/Dashboard.PNG)
