@@ -21,7 +21,7 @@ Website Application Finance | Frontend Repository
 
 ## Getting Started
 
-1. Download this Project or you can type `git clone https://github.com/thariqfarsha/itjobs-frontend.git`
+1. Download this Project or you can type `git clone https://github.com/foldadjo/next-js`
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
 4. Add .env in nextConfig.js
