@@ -3,10 +3,12 @@ import Layout from "../../component/Layout/main";
 import Image from "next/image";
 import chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { BsArrowUpShort, BsPlus } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { getDashboard, historyTransaction } from "../../store/action/dashboard";
+import { getUserById } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -26,6 +28,7 @@ const button = {
 };
 
 function Dashboard() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [userdata, setUserdata] = useState({});
   const [dashboard, setDashboard] = useState({});
@@ -43,29 +46,24 @@ function Dashboard() {
   const getUserdata = async () => {
     try {
       const id = Cookies.get("id");
-      const result = await axios.get(`/user/profile/${id}`);
-      const dashboard = await axios.get(`/dashboard/${id}`);
-      const history = await axios.get(
-        `/transaction/history?page=1&limit=6&filter=`
-      );
+      const result = await dispatch(getUserById(id));
+      const dashboard = await dispatch(getDashboard(id));
+      const history = await dispatch(historyTransaction(1, 6, ""));
       Cookies.set(
         "name",
-        result.data.data.firstName + " " + result.data.data.lastName
+        result.value.data.data.firstName + " " + result.value.data.data.lastName
       );
-      Cookies.set("noTelp", result.data.data.noTelp);
-      Cookies.set("image", result.data.data.image);
-      Cookies.set("history", JSON.stringify(history.data.data));
-      Cookies.set("balance", result.data.data.balance);
-      setUserdata(result.data.data);
-      setDashboard(dashboard.data.data);
-      setHistory(history.data.data);
-      console.log(result);
-      console.log(dashboard);
-      console.log(history);
-      const listIncome = dashboard.data.data.listIncome.map(
+      Cookies.set("noTelp", result.value.data.data.noTelp);
+      Cookies.set("image", result.value.data.data.image);
+      Cookies.set("history", JSON.stringify(history.value.data.data));
+      Cookies.set("balance", result.value.data.data.balance);
+      setUserdata(result.value.data.data);
+      setDashboard(dashboard.value.data.data);
+      setHistory(history.value.data.data);
+      const listIncome = dashboard.value.data.data.listIncome.map(
         (item) => item.total
       );
-      const listExpense = dashboard.data.data.listExpense.map(
+      const listExpense = dashboard.value.data.data.listExpense.map(
         (item) => item.total
       );
       setListIn(listIncome);

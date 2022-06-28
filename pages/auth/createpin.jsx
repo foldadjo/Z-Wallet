@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Layout from "../../component/Layout/auth";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { updatePin } from "../../store/action/user";
 
 export default function CreatePin() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     pin: "",
   });
@@ -17,8 +20,7 @@ export default function CreatePin() {
   const handleSubmit = async () => {
     try {
       const id = Cookies.get("id");
-      const result = await axios.patch(`/user/pin/${id}`, form);
-      console.log(result);
+      const result = await dispatch(updatePin(id, form));
       router.push("/auth/createpinsuccess");
     } catch (error) {
       // alert(error.response.data.msg);

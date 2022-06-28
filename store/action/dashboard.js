@@ -10,7 +10,9 @@ export const getDashboard = (id) => {
 export const historyTransaction = (page, limit, filter) => {
   return {
     type: "GET_HISTORY_TRANSACTION",
-    payload: axios.get(`/user?page=${page}&limit=${limit}&filter=${filter}`),
+    payload: axios.get(
+      `/transaction/history?page=${page}&limit=${limit}&filter=${filter}`
+    ),
   };
 };
 

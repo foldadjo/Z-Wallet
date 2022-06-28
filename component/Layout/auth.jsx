@@ -14,7 +14,6 @@ export default function MainLayoutAuth(props) {
   }, []);
   const cekToken = () => {
     const token = Cookies.get("token");
-    console.log(token);
     if (token) {
       const decoded = jwt_decode(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -36,7 +35,7 @@ export default function MainLayoutAuth(props) {
         router.push("/dashboard");
       }
     } else {
-      console.log("login first");
+      alert("login first");
     }
   };
 

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Layout from "../../component/Layout/main";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { updatePin } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -12,6 +13,8 @@ const board = {
 
 function changePinNew() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const id = Cookies.get("id");
   const [form, setForm] = useState({
     pin: "",
@@ -23,12 +26,10 @@ function changePinNew() {
 
   const handleSubmit = async () => {
     try {
-      const result = await axios.patch(`/user/pin/${id}`, form);
-      console.log(result);
-      alert(result.data.msg);
+      const result = await dispatch(updatePin(id, form));
+      alert(result.value.data.msg);
       router.push("/profile");
     } catch (error) {
-      alert(error.response.data.msg);
       console.log(error);
     }
   };

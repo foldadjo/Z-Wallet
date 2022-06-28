@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
-import axios from "../../../utils/axios";
 import Cookies from "js-cookie";
 import Router, { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { checkPin } from "../../../store/action/user";
+import { transferBalance } from "../../../store/action/dashboard";
 
 const board = {
   borderRadius: "20px",
@@ -17,6 +19,8 @@ const myLoader = ({ src, width, quality }) => {
 
 function Confirmation() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [transferName, setTransferName] = useState();
   const [transferImage, setTransferImage] = useState();
   const [transferNoTelp, setTransferNoTelp] = useState();
@@ -53,13 +57,13 @@ function Confirmation() {
       receiverId: dataTransfer.receiverId,
     };
     try {
-      const result1 = await axios.get(`/user/pin?pin=${form.pin}`);
+      const result1 = await dispatch(checkPin(form.pin));
       console.log(result1);
-      if (result1.data.msg === "Correct pin") {
-        const transaction = await axios.post(`/transaction/transfer`, data);
-        Router.push(`/transfer/status/${transaction.data.data.id}`);
-        Cookies.set(`statusTf`, transaction.data.msg);
-        console.log("transfer success");
+      if (result1.value.data.msg === "Correct pin") {
+        const transaction = await dispatch(transferBalance(data));
+        Router.push(`/transfer/status/${transaction.value.data.data.id}`);
+        Cookies.set(`statusTf`, transaction.value.data.msg);
+        alert("transfer success");
       } else {
         alert("wrong pin");
       }

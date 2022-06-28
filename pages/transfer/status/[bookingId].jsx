@@ -3,7 +3,9 @@ import Layout from "../../../component/Layout/main";
 import Image from "next/image";
 import axios from "../../../utils/axios";
 import Cookies from "js-cookie";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { getTransaction } from "../../../store/action/dashboard";
 
 const board = {
   borderRadius: "20px",
@@ -19,6 +21,8 @@ const button = {
 
 function status() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [transferName, setTransferName] = useState();
   const [transferImage, setTransferImage] = useState();
   const [transferNoTelp, setTransferNoTelp] = useState();
@@ -45,8 +49,8 @@ function status() {
 
   const handlePDF = async () => {
     try {
-      const getPDF = await axios.get(`/export/transaction/${transferId}`);
-      window.open(getPDF.data.data.url);
+      const getPDF = await dispatch(getTransaction(transferId));
+      window.open(getPDF.value.data.data.url);
     } catch (error) {
       console.log(error);
     }

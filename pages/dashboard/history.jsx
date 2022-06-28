@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
-import axios from "../../utils/axios";
+import { useDispatch } from "react-redux";
+import { historyTransaction } from "../../store/action/dashboard";
 
 const board = {
   borderRadius: "20px",
@@ -20,6 +21,7 @@ const button = {
 };
 
 function History() {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
   const [history, setHistory] = useState([]);
   const [page, setPage] = useState(1);
@@ -38,12 +40,9 @@ function History() {
 
   const getUserdata = async () => {
     try {
-      const History = await axios.get(
-        `/transaction/history?page=${page}&limit=5&filter=${filter}`
-      );
-      setHistory(History.data.data);
-      setTotalPage(result.data.pagination.totalPage);
-      console.log(History);
+      const History = await dispatch(historyTransaction(page, 5, filter));
+      setHistory(History.value.data.data);
+      setTotalPage(History.value.data.pagination.totalPage);
     } catch (error) {
       console.log(error);
     }

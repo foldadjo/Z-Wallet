@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { updatePassword } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -13,6 +14,8 @@ const board = {
 
 function ChangePass() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const id = Cookies.get("id");
   const [form, setForm] = useState({
     oldPassword: "",
@@ -31,12 +34,10 @@ function ChangePass() {
       confirmPassword: form.confirmPassword,
     };
     try {
-      const result = await axios.patch(`/user/password/${id}`, data);
-      console.log(result);
-      alert(result.data.msg);
+      const result = await dispatch(updatePassword(id, data));
+      alert(result.value.data.msg);
       router.push("/profile");
     } catch (error) {
-      alert(error.response.data.msg);
       console.log(error);
     }
   };

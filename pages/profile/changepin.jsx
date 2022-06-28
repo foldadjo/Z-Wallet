@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Layout from "../../component/Layout/main";
 import axios from "../../utils/axios";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { checkPin } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -11,6 +13,8 @@ const board = {
 
 function ChangePin() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     pin: "",
   });
@@ -21,9 +25,8 @@ function ChangePin() {
 
   const handleSubmit = async () => {
     try {
-      const result1 = await axios.get(`/user/pin?pin=${form.pin}`);
-      console.log(result1);
-      if (result1.data.msg === "Correct pin") {
+      const result1 = await dispatch(checkPin(form.pin));
+      if (result1.value.data.msg === "Correct pin") {
         router.push(`/profile/changepinnew`);
       } else {
         alert("wrong pin");

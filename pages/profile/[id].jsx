@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../component/Layout/main";
-import Image from "next/image";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { getUserById } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -13,6 +13,8 @@ const board = {
 
 function Profile() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const id = router.query.id;
   const [userdata, setUserdata] = useState({});
 
@@ -23,9 +25,8 @@ function Profile() {
   const getUserdata = async () => {
     try {
       const id = Cookies.get("id");
-      const result = await axios.get(`/user/profile/${id}`);
-      setUserdata(result.data.data);
-      console.log(result);
+      const result = await dispatch(getUserById(id));
+      setUserdata(result.value.data.data);
     } catch (error) {
       console.log(error);
     }

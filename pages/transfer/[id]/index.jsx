@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../../component/Layout/main";
 import Image from "next/image";
-import axios from "../../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 

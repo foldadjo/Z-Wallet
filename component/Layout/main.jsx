@@ -17,7 +17,6 @@ export default function MainLayout(props) {
   }, []);
   const cekToken = () => {
     const token = Cookies.get("token");
-    console.log(token);
     if (token) {
       const decoded = jwt_decode(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -36,7 +35,6 @@ export default function MainLayout(props) {
         Cookies.remove("history");
         router.push("/");
       } else {
-        console.log("already login");
       }
     } else {
       router.push("/login");

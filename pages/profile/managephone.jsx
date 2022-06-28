@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import axios from "../../utils/axios";
+import { useDispatch } from "react-redux";
+import { updateProfileUser } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -13,28 +14,23 @@ const board = {
 
 function profile() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const id = Cookies.get("id");
   const [form, setForm] = useState({
     noTelp: "",
   });
 
   const handleChangeText = (event) => {
-    const { name, value, files } = event.target;
-    if (name === "image") {
-      setForm({ ...form, [name]: files[0] });
-      setData({ ...data, image: URL.createObjectURL(files[0]) });
-      console.log(image);
-    } else {
-      setForm({ ...form, [name]: value });
-    }
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleChangephone = async () => {
     const changePhone = { noTelp: form.noTelp };
     try {
-      const resultPhone = await axios.patch(`/user/profile/${id}`, changePhone);
-      console.log(resultPhone);
-      Cookies.set("noTelp", resultPhone.data.data.noTelp);
+      const resultPhone = await dispatch(updateProfileUser(id, changePhone));
+      Cookies.set("noTelp", resultPhone.value.data.data.noTelp);
       router.push("/profile");
       alert("Success Change number phone");
     } catch (error) {

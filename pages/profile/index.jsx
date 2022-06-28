@@ -4,6 +4,13 @@ import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import axios from "../../utils/axios";
+import { useDispatch } from "react-redux";
+import {
+  updateProfileUser,
+  updateImageUser,
+  deleteImage,
+  getUserById,
+} from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -13,6 +20,8 @@ const board = {
 
 function profile() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const name = Cookies.get("name");
   const noTelp = Cookies.get("noTelp");
   const image = Cookies.get("image");
@@ -42,18 +51,21 @@ function profile() {
   const handleChangename = async () => {
     const changeName = { firstName: form.firstName, lastName: form.lastName };
     try {
-      const resultName = await axios.patch(`/user/profile/${id}`, changeName);
-      console.log(resultName);
+      const resultName = await dispatch(updateProfileUser(id, changeName));
       Cookies.set(
         "name",
-        resultName.data.data.firstName + " " + resultName.data.data.lastName
+        resultName.value.data.data.firstName +
+          " " +
+          resultName.value.data.data.lastName
       );
       setData({
         ...data,
         name:
-          resultName.data.data.firstName + " " + resultName.data.data.lastName,
+          resultName.value.data.data.firstName +
+          " " +
+          resultName.value.data.data.lastName,
       });
-      alert(resultName.data.msg);
+      alert(resultName.value.data.msg);
     } catch (error) {
       console.log(error);
     }
@@ -69,14 +81,13 @@ function profile() {
 
   const handleDeleteImage = async () => {
     try {
-      const resultDelete = await axios.delete(`/user/image/${id}`);
-      console.log(resultDelete);
+      const resultDelete = await dispatch(deleteImage(id));
       Cookies.set("image", "null");
       setData({
         ...data,
         image: "null",
       });
-      alert(resultDelete.data.msg);
+      alert(resultDelete.value.data.msg);
     } catch (error) {
       console.log(error);
     }
@@ -96,16 +107,14 @@ function profile() {
       for (const data of formData.entries()) {
         console.log(data[0] + ", " + data[1]);
       }
-      const resultUpdate = await axios.patch(`/user/image/${id}`, formData);
+      const resultUpdate = await dispatch(updateImageUser(id, formData));
       alert("Success Change Image");
-      console.log(resultUpdate);
       if (resultUpdate) {
-        const getData = await axios.get(`/user/profile/${id}`);
-        Cookies.set("image", getData.data.data.image);
-        console.log(getData);
+        const getData = await dispatch(getUserById(id));
+        Cookies.set("image", getData.value.data.data.image);
         setData({
           ...data,
-          image: getData.data.data.image,
+          image: getData.value.data.data.image,
         });
       }
     } catch (error) {

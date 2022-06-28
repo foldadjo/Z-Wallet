@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../component/Layout/main";
 import Image from "next/image";
-import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { getAllUser } from "../../store/action/user";
 
 const board = {
   borderRadius: "20px",
@@ -35,6 +36,7 @@ const myLoader = ({ src, width, quality }) => {
 };
 
 function Transfer() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [userdata, setUserdata] = useState([]);
   const [search, setSearch] = useState("");
@@ -61,11 +63,9 @@ function Transfer() {
 
   const getUserdata = async () => {
     try {
-      const result = await axios.get(
-        `/user?page=${page}&limit=5&search=${search}&sort=${filter}`
-      );
-      setUserdata(result.data.data);
-      setTotalPage(result.data.pagination.totalPage);
+      const result = await dispatch(getAllUser(page, 5, search, filter));
+      setUserdata(result.value.data.data);
+      setTotalPage(result.value.data.pagination.totalPage);
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -115,6 +115,8 @@ function Transfer() {
         <br />
         {userdata.map((item) => (
           <div
+            className="TransferTransition"
+            id="div4"
             key={item.id}
             onClick={() =>
               handleTransfer(

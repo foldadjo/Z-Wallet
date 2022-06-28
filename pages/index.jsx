@@ -19,7 +19,6 @@ function LandingPage() {
   }, []);
   const cekToken = () => {
     const token = Cookies.get("token");
-    console.log(token);
     if (token) {
       const decoded = jwt_decode(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -41,7 +40,7 @@ function LandingPage() {
         router.push("/dashboard");
       }
     } else {
-      console.log("login first");
+      alert("login first");
     }
   };
 
