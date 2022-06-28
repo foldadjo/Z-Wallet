@@ -35,9 +35,6 @@ function Dashboard() {
   const [listIn, setListIn] = useState([]);
   const [listEx, setListEx] = useState([]);
   const [history, setHistory] = useState([]);
-  const [form, setForm] = useState({
-    amount: "",
-  });
 
   useEffect(() => {
     getUserdata();

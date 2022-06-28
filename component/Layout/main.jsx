@@ -6,11 +6,14 @@ import Head from "next/head";
 import Footer from "../footer";
 import Tooltip from "../tooltip";
 import NextNProgress from "nextjs-progressbar";
-import axios from "../../utils/axios";
+import { useDispatch } from "react-redux";
+import { topUp, topUp } from "../../store/action/dashboard";
+
 import jwt_decode from "jwt-decode";
 
 export default function MainLayout(props) {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     cekToken();
@@ -51,9 +54,8 @@ export default function MainLayout(props) {
 
   const handleTopup = async () => {
     try {
-      const topUp = await axios.post("/transaction/top-up", form);
-      console.log(topUp);
-      window.open(topUp.data.data.redirectUrl);
+      const topUp2 = await dispatch(topUp(form));
+      window.open(topUp2.value.data.data.redirectUrl);
     } catch (error) {
       console.log(error);
     }
