@@ -35,7 +35,6 @@ export default function MainLayoutAuth(props) {
         router.push("/dashboard");
       }
     } else {
-      alert("login first");
     }
   };
 

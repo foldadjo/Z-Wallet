@@ -115,8 +115,6 @@ function Transfer() {
         <br />
         {userdata.map((item) => (
           <div
-            className="TransferTransition"
-            id="div4"
             key={item.id}
             onClick={() =>
               handleTransfer(
