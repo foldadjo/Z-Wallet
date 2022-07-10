@@ -1,7 +1,11 @@
 <h1 align='center'>Zwallet</h1>
 
+<p align="center">
+ <a href="https://z-wallet-web.vercel.app/"><img src="/public/Zwallet-blue.png" alt="2022-06-11-00-56-56-98-REC" border="0" width="800px"></a>
+</p>
+
 ### Link Varcel Deploy
-- [Click_Hire](https://pay-jauhar.vercel.app/)
+- [Click_Hire](https://z-wallet-web.vercel.app/)
 
 ## About The Project
 
@@ -21,19 +25,23 @@ Website Application Finance | Frontend Repository
 
 ## Getting Started
 
-1. Download this Project or you can type `git clone https://github.com/foldadjo/next-js`
+1. Download this Project or you can type `git clone https://github.com/foldadjo/Z-Wallet`
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
 4. Add .env in nextConfig.js
 
 ```sh
 URL_BACKEND: "https://fazzpay.herokuapp.com",
+URL_FRONTEND: "https://z-wallet-web.vercel.app/",
 URL_CLOUDINARY: "https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/",
 ```
 
 5. Type `npm run dev`
 
+## License
 
+© [ZWallet](https://github.com/foldadjo/Z-Wallet)
+© [Publication](https://z-wallet-web.vercel.app/)
 
 ## ⛏️ Built Using
 
