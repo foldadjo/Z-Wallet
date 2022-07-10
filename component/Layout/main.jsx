@@ -7,7 +7,7 @@ import Footer from "../footer";
 import Tooltip from "../tooltip";
 import NextNProgress from "nextjs-progressbar";
 import { useDispatch } from "react-redux";
-import { topUp, topUp } from "../../store/action/dashboard";
+import { topUp } from "../../store/action/dashboard";
 
 import jwt_decode from "jwt-decode";
 
